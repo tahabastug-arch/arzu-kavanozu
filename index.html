@@ -1,0 +1,1948 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arzu Kavanozu</title>
+<meta name="description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, resmini kaydet.">
+<meta property="og:title" content="Arzu Kavanozu">
+<meta property="og:description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, resmini kaydet.">
+<meta name="robots" content="noindex">
+<style>
+  :root{--c:#e63946;--on-c:#fff;--ink:#1d1a17;--bg:#fbf6ef;--card:#fff;--muted:#6b625a;--line:#e9e0d5;--x:#d62828;--q:#1d4ed8}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:18px;line-height:1.45;padding-bottom:110px}
+  @media(min-width:960px){body{padding-bottom:40px}}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 16px}
+  header{margin-bottom:22px}
+  header h1{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium","Helvetica Neue Condensed",sans-serif;font-weight:700;font-size:clamp(44px,9vw,68px);margin:0;line-height:1.05;letter-spacing:.01em}
+  header h1 span{color:var(--c);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+  header p{margin:10px 0 0;color:var(--muted);max-width:720px}
+  .legend{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:15px;color:var(--muted)}
+  .legend li{display:flex;gap:6px;align-items:center}
+  .legend strong{font-weight:400;color:var(--ink);font-size:22px;line-height:1;min-width:26px;text-align:center;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Android Emoji","Segoe UI Symbol",sans-serif}
+
+  /* Header top: h1 + sosyal medya bağlantıları */
+  .header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px 20px;flex-wrap:wrap}
+  .social{display:flex;gap:10px;flex-wrap:wrap}
+  .social a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:2px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;min-height:44px;line-height:1;transition:background .15s,border-color .15s,transform .08s;white-space:nowrap}
+  .social a:hover{background:var(--bg);border-color:var(--ink)}
+  .social a:active{transform:scale(.97)}
+  .social a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  .social a svg{width:20px;height:20px;flex-shrink:0;display:block}
+  @media(max-width:600px){
+    .header-top{flex-direction:column;align-items:stretch}
+    .social{justify-content:flex-start}
+    .social a{padding:10px 12px;font-size:14px}
+    .social a svg{width:18px;height:18px}
+  }
+
+  .layout{display:grid;gap:24px}
+  @media(min-width:960px){.layout{grid-template-columns:minmax(0,1fr) 430px}.side{position:sticky;top:20px;align-self:start}}
+  .panel{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:20px}
+  .step{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  h2{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:600;font-size:27px;margin:2px 0 12px;line-height:1.15}
+  .hint{color:var(--muted);font-size:16px;margin:-4px 0 14px}
+  input[type=text]{font:inherit;font-size:20px;width:100%;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+  input[type=text]:focus{border-color:var(--ink);outline:none}
+  button{font:inherit;cursor:pointer;color:var(--ink)}
+  button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+  .picker{display:grid;gap:18px}
+  @media(min-width:620px){.picker{grid-template-columns:1fr 170px;align-items:center}}
+  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;max-width:420px}
+  .sw{aspect-ratio:1;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);padding:0;min-width:40px}
+  .sw[aria-pressed=true]{box-shadow:0 0 0 3px var(--ink)}
+  .sliders{display:grid;gap:12px;margin-top:16px;max-width:420px}
+  .sl{display:grid;grid-template-columns:52px 1fr 44px;align-items:center;gap:10px;font-weight:700;font-size:16px}
+  .sl output{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:26px;border-radius:13px;border:2px solid var(--ink);margin:0;background:#ccc}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.25)}
+  input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+  .hexrow{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .hexrow input{width:130px;font-size:18px;padding:10px 12px;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase}
+  .ghost{background:#fff;border:2px solid var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;font-size:16px}
+  .ghost:hover{background:var(--bg)}
+  .preview-jars{display:flex;justify-content:center;gap:2px}
+  .preview-jars canvas{width:62px;height:101px}
+
+  .q{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center;padding:14px 0;border-top:2px dashed var(--line);scroll-margin-top:20px;border-radius:14px}
+  .q:first-of-type{border-top:0}
+  .q.missing{background:#fff7f6;outline:4px solid var(--x);outline-offset:4px}
+  .q canvas{width:76px;height:124px}
+  .qnum{font-size:14px;color:var(--muted);font-weight:700}
+  .qlabel{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:600;font-size:25px;line-height:1.15;margin:2px 0 10px}
+  .qdesc{display:inline;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:13px;font-weight:400;font-style:italic;color:var(--muted);line-height:1.4}
+  .scale{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:420px}
+  .scale button{height:52px;border-radius:14px;border:2px solid var(--ink);background:#fff;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Android Emoji","Segoe UI Symbol",sans-serif;font-weight:600;font-size:26px;transition:transform .08s;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
+  .scale button:active{transform:scale(.94)}
+  .scale button[data-val="x"]{color:var(--x);border-color:var(--x);font-size:22px}
+  .scale button[data-val="?"]{color:var(--q);border-color:var(--q);font-size:24px}
+  .scale button[aria-pressed=true]{background:var(--c);color:var(--on-c);box-shadow:0 3px 0 var(--ink)}
+  .scale button[data-val="x"][aria-pressed=true]{background:var(--x);color:#fff;border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+  .scale button[data-val="?"][aria-pressed=true]{background:var(--q);color:#fff;border-color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+  .scale button[data-val="?"] .qm-glyph{display:inline-flex;align-items:center;justify-content:center;line-height:1;will-change:transform}
+  @media(max-width:480px){.scale{gap:5px}.scale button{font-size:23px;height:48px}.scale button[data-val="x"]{font-size:20px}.scale button[data-val="?"]{font-size:21px}.qdesc{font-size:12px}}
+
+  .subs{margin-top:14px;padding-top:14px;border-top:2px dashed var(--line)}
+  .subs[hidden]{display:none}
+  .subs-title{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px;letter-spacing:.02em}
+  .subs-list{display:flex;flex-wrap:wrap;gap:8px}
+  .sub-btn{padding:9px 14px;border-radius:999px;border:2px solid var(--line);background:#fff;font-size:14px;font-weight:700;transition:transform .08s;cursor:pointer;line-height:1.2}
+  .sub-btn:active{transform:scale(.96)}
+  .sub-btn[aria-pressed="true"]{background:var(--c);color:var(--on-c);border-color:var(--ink);box-shadow:0 2px 0 var(--ink)}
+  @media(max-width:480px){.sub-btn{padding:8px 12px;font-size:13px}}
+
+  .poster{display:block;max-width:100%;max-height:70vh;width:auto;height:auto;margin:0 auto;border-radius:12px;border:2px solid var(--line);background:#fff}
+  .big{display:block;width:100%;margin-top:16px;padding:18px 20px;border-radius:18px;border:3px solid var(--ink);background:var(--c);color:var(--on-c);font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:700;font-size:26px;letter-spacing:.02em;box-shadow:0 5px 0 var(--ink)}
+  .big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+  .small-links{display:flex;justify-content:space-between;gap:10px;margin-top:14px;font-size:15px;color:var(--muted)}
+  .linkbtn{background:none;border:0;padding:4px 0;text-decoration:underline;color:var(--muted);font-size:15px}
+  .status{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#fff2f0;border:2px solid #f4b4ab;color:#8a1c12;font-weight:700;font-size:15px;line-height:1.35}
+  .status[hidden]{display:none}
+
+  /* Site atfı — yalnızca web sayfasında, PNG'ye dahil değil */
+  .site-footer{margin-top:36px;padding-top:20px;border-top:2px solid var(--line);text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+  .site-footer p{margin:2px 0}
+  .site-footer a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .site-footer a:hover{color:var(--ink)}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(251,246,239,.96);border-top:2px solid var(--line);backdrop-filter:blur(6px);z-index:5}
+  .bar-in{max-width:1180px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:14px}
+  .bar-in span{font-weight:700;font-size:15px;color:var(--muted);flex:1}
+  .bar .big{width:auto;margin:0;padding:12px 22px;font-size:21px;box-shadow:0 4px 0 var(--ink)}
+  @media(min-width:960px){.bar{display:none}}
+
+  #toast{position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#8a1c12;color:#fff;padding:14px 24px;border-radius:14px;font-weight:700;font-size:16px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:calc(100% - 32px);text-align:center;pointer-events:none;opacity:0;transition:opacity .3s}
+  #toast.show{opacity:1}
+
+  #modal{position:fixed;inset:0;background:rgba(20,16,12,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+  #modal[hidden]{display:none}
+  .sheet{background:#fff;border-radius:22px;padding:20px;max-width:440px;width:100%;max-height:92vh;overflow:auto;text-align:center}
+  .sheet h3{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-size:28px;margin:0 0 6px}
+  #modalBody p{margin:0 0 12px;color:var(--muted);font-size:16px}
+  #modalBody img{width:100%;border-radius:10px;border:2px solid var(--line)}
+  .modal-actions{display:grid;gap:10px;margin:14px 0 6px}
+  .modal-actions .big{margin-top:0;font-size:22px;padding:14px 18px;box-shadow:0 4px 0 var(--ink)}
+  .page-list{display:grid;gap:10px;margin-top:14px}
+  .page-item{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:10px;background:#fdfaf6}
+  .page-item img{width:52px;height:auto;border:1px solid var(--line);border-radius:4px;background:#fff}
+  .page-item .page-meta{flex:1;text-align:left;font-size:14px;color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="header-top">
+      <h1><span>Arzu Kavanozu</span></h1>
+      <nav class="social" aria-label="Sosyal medya bağlantıları">
+        <a href="https://www.instagram.com/_tahabastug/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilim (yeni sekmede açılır)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" ry="5.5"/>
+            <circle cx="12" cy="12" r="4.4"/>
+            <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+        <a href="https://x.com/TahaBastug35_5" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) profilim (yeni sekmede açılır)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span>X</span>
+        </a>
+      </nav>
+    </div>
+    <p>Rengini seç, her konuyu emoji ölçeğiyle puanla. 🚫 kesin sınırı, ？ ise merak edilen konuları belirtir. Tüm soruları yanıtladıktan sonra resmini kaydedebilirsin.</p>
+    <ul class="legend" aria-label="Ölçek açıklamaları">
+      <li><strong>😶</strong> 0 — Hiç ilgi yok</li>
+      <li><strong>🙂</strong> 1 — Az ilgi</li>
+      <li><strong>😊</strong> 2 — Biraz ilgi</li>
+      <li><strong>😏</strong> 3 — Orta düzeyde ilgi</li>
+      <li><strong>😍</strong> 4 — Yüksek ilgi</li>
+      <li><strong>🔥</strong> 5 — Çok yüksek ilgi</li>
+      <li><strong>🚫</strong> Kesin sınır</li>
+      <li><strong>？</strong> Merak ediyorum</li>
+    </ul>
+  </header>
+
+  <div class="layout">
+    <main>
+      <section class="panel">
+        <div class="step">Adım 1</div>
+        <h2>Adın ne?</h2>
+        <p class="hint">Posterin üstündeki boş satıra yazılır. Takma ad olabilir; boş bırakabilirsin.</p>
+        <input type="text" id="name" maxlength="24" autocomplete="off" placeholder="Adın">
+      </section>
+
+      <section class="panel">
+        <div class="step">Adım 2</div>
+        <h2>Kavanoz rengini seç</h2>
+        <div class="picker">
+          <div>
+            <div class="swatches" id="swatches" aria-label="Renk seçenekleri"></div>
+            <div class="sliders">
+              <label class="sl">Kırmızı<input type="range" id="r" min="0" max="255"><output id="rv"></output></label>
+              <label class="sl">Yeşil<input type="range" id="g" min="0" max="255"><output id="gv"></output></label>
+              <label class="sl">Mavi<input type="range" id="b" min="0" max="255"><output id="bv"></output></label>
+            </div>
+            <div class="hexrow">
+              <input type="text" id="hex" maxlength="7" spellcheck="false" aria-label="Renk kodu">
+              <button class="ghost" id="surprise" type="button">Beni şaşırt</button>
+            </div>
+          </div>
+          <div class="preview-jars" aria-hidden="true">
+            <canvas id="pv1"></canvas><canvas id="pv2"></canvas><canvas id="pv3"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="step">Adım 3</div>
+        <h2>Kavanozları doldur</h2>
+        <p class="hint">Her soru için tek bir seçenek işaretle. 😶 da geçerli bir yanıttır. Seçili seçeneğe tekrar dokunursan yanıtı temizlersin. 1–5 arası veya ？ seçtiğinde alt kategoriler açılır; istediğin kadarını işaretleyebilirsin (zorunlu değil).</p>
+        <div id="questions"></div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section class="panel" id="done">
+        <div class="step">Adım 4</div>
+        <h2>Kavanozların</h2>
+        <canvas class="poster" id="poster" aria-label="Doldurulmuş kavanozlarının önizlemesi"></canvas>
+        <p class="hint" id="tierNote" hidden></p>
+        <p class="status" id="status" role="alert" hidden></p>
+        <button class="big" id="save" type="button">Kavanozlarımı kaydet</button>
+        <div class="small-links">
+          <span>Tüm veriler yalnızca bu cihazda kalır.</span>
+          <button class="linkbtn" id="reset" type="button">Baştan başla</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Arzu Kavanozu · Taha BAŞTUĞ tarafından uyarlanmıştır.</p>
+    <p>Temel alınan proje: <a href="https://github.com/LockedTony/kink-jars" target="_blank" rel="noopener noreferrer">Kink Jars — LockedTony</a></p>
+  </footer>
+</div>
+
+<div class="bar"><div class="bar-in"><span id="progress" aria-live="polite">0 / 28 yanıtlandı</span><button class="big" id="saveBar" type="button">Kavanozlarımı kaydet</button></div></div>
+
+<div id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mt">
+  <div class="sheet">
+    <h3 id="mt">Kavanozların hazır!</h3>
+    <div id="modalBody"></div>
+    <button class="big" id="closeModal" type="button">Tamam</button>
+  </div>
+</div>
+
+<script>
+/* ===== 28 kategori (sıra ve anlam korunur) ===== */
+const CATEGORIES = [
+  { title: "Dominant olmak", desc: "Etkileşimde yöneten ve kontrolü üstlenen rolde olmak." },
+  { title: "Submissive olmak", desc: "Kontrolü karşı tarafa bırakılan rolde olmak." },
+  { title: "Switch olmak", desc: "Hem dominant hem de submissive rolleri benimseyebilmek." },
+  { title: "Boğaz sıkma", desc: "Partnerin boğazını sıkmaya yönelik eylemlere ilgi duymak." },
+  { title: "Boğazının sıkılması", desc: "Partner tarafından boğazının sıkılmasına ilgi duymak." },
+  { title: "Şaplak atmak", desc: "Partnerine şaplak atmaya ilgi duymak." },
+  { title: "Şaplak yemek", desc: "Partnerinden şaplak yemeye ilgi duymak." },
+  { title: "DDLG / MDLB", desc: "Bakım veren ve daha çocuksu bir rolü benimseyen yetişkinler arasındaki rol dinamiklerine ilgi duymak." },
+  { title: "Yaş oyunu", desc: "Gerçek yaşlardan farklı yaş rollerini canlandırmaya ilgi duymak." },
+  { title: "Kamusal alanda cinsel veya erotik davranışlar", desc: "Kamusal alanlarda cinsel veya erotik davranışlarda bulunmaya ilgi duymak." },
+  { title: "Mum oyunu", desc: "Cilt üzerinde mum kullanılarak yapılan duyusal etkinliklere ilgi duymak." },
+  { title: "İdrar oyunları", desc: "İdrarın cinsel etkinliklerde kullanılmasına ilgi duymak." },
+  { title: "Rol yapma", desc: "Kurgusal karakterleri veya durumları canlandırmaya ilgi duymak." },
+  { title: "Rızaya dayalı rıza dışı rol oyunu", desc: "Rıza yokmuş gibi davranılan, ancak önceden karşılıklı rızayla belirlenen kurgusal senaryolara ilgi duymak." },
+  { title: "Orgazm kontrolüne tabi olmak", desc: "Orgazmın zamanlamasının veya gerçekleşmesinin partner tarafından kontrol edilmesine ilgi duymak." },
+  { title: "Orgazmı kontrol etmek", desc: "Partnerin orgazmının zamanlamasını veya gerçekleşmesini kontrol etmeye ilgi duymak." },
+  { title: "Ağız tıkacı kullanımı", desc: "Cinsel veya BDSM etkinliklerinde ağız tıkacı kullanmaya ilgi duymak." },
+  { title: "Ayak fetişi / ayaklara ilgi", desc: "Ayaklara cinsel veya erotik ilgi duymak." },
+  { title: "Anal", desc: "Anal seks veya anal uyarıma ilgi duymak." },
+  { title: "Bağlanmak", desc: "Bir partner tarafından bağlanmaya ilgi duymak." },
+  { title: "Birini bağlamak", desc: "Partnerini bağlamaya ilgi duymak." },
+  { title: "Birini aşağılamak veya küçük düşürmek", desc: "Partnerini aşağılamaya veya küçük düşürmeye ilgi duymak." },
+  { title: "Aşağılanmak veya küçük düşürülmek", desc: "Partner tarafından aşağılanmaya veya küçük düşürülmeye ilgi duymak." },
+  { title: "BDSM", desc: "Bağlanma, disiplin, hâkimiyet, teslimiyet, sadizm ve mazoşizm içeren pratiklere ilgi duymak." },
+  { title: "Üçlü cinsel deneyimler", desc: "Üç kişinin katıldığı cinsel deneyimlere ilgi duymak." },
+  { title: "Sadizm", desc: "Başkalarına acı verme veya onlar üzerinde güç kurma temasından haz almaya ilgi duymak." },
+  { title: "Mazoşizm", desc: "Acı çekme veya başkasının kontrolüne girme temasından haz almaya ilgi duymak." },
+  { title: "Tükürmek", desc: "Tükürme eylemini içeren cinsel veya erotik pratiklere ilgi duymak." }
+];
+
+const SUBCATS = [
+  [
+    { id: "yonlendirme", label: "Yönlendirme ve karar verme" },
+    { id: "kurallar", label: "Kurallar koyma" },
+    { id: "talimat", label: "Talimat verme" },
+    { id: "kontrol", label: "Kontrolü üstlenme" },
+    { id: "teslimiyet", label: "Partnerin teslimiyetini yönetme" }
+  ],
+  [
+    { id: "takip", label: "Talimatları takip etme" },
+    { id: "uyma", label: "Kurallara uyma" },
+    { id: "birakma", label: "Kontrolü partnere bırakma" },
+    { id: "hizmet", label: "Hizmet etme" },
+    { id: "yonlendirilme", label: "Partner tarafından yönlendirilme" }
+  ],
+  [
+    { id: "dom-tercih", label: "Daha çok dominant rolü tercih etme" },
+    { id: "sub-tercih", label: "Daha çok submissive rolü tercih etme" },
+    { id: "esit", label: "İki rolü eşit derecede tercih etme" },
+    { id: "duruma-gore", label: "Duruma veya partnere göre rol değiştirme" }
+  ],
+  [],
+  [],
+  [
+    { id: "elle", label: "Elle şaplak atma" },
+    { id: "arac", label: "Araç kullanarak şaplak atma" },
+    { id: "hafif", label: "Hafif yoğunluk" },
+    { id: "orta", label: "Orta yoğunluk" },
+    { id: "yuksek", label: "Yüksek yoğunluk" },
+    { id: "degisken", label: "Yoğunluğun duruma veya senaryoya göre değişmesi" }
+  ],
+  [
+    { id: "elle", label: "Elle şaplak yemeyi tercih etme" },
+    { id: "arac", label: "Araç kullanılarak şaplak yemeyi tercih etme" },
+    { id: "hafif", label: "Hafif yoğunluk" },
+    { id: "orta", label: "Orta yoğunluk" },
+    { id: "yuksek", label: "Yüksek yoğunluk" },
+    { id: "degisken", label: "Yoğunluğun duruma veya senaryoya göre değişmesi" }
+  ],
+  [
+    { id: "bakim-veren", label: "Bakım veren rolü" },
+    { id: "bakim-alan", label: "Bakım alan rolü" },
+    { id: "sefkat", label: "Şefkat ve ilgi odaklı dinamik" },
+    { id: "kurallar", label: "Kurallar ve rutinler" },
+    { id: "rol-degisimi", label: "Rol değişimi" }
+  ],
+  [
+    { id: "genc", label: "Daha genç karakteri canlandırma" },
+    { id: "olgun", label: "Daha olgun karakteri canlandırma" },
+    { id: "yas-farki", label: "Yaş farkına dayalı senaryo" },
+    { id: "donem", label: "Belirli bir yaş dönemini canlandırma" }
+  ],
+  [
+    { id: "ozel-ortam", label: "Kamusal alan hissi veren özel ortam" },
+    { id: "acik-alan", label: "Açık alan temalı senaryo" },
+    { id: "gizlilik", label: "Gizlilik temalı senaryo" },
+    { id: "atmosfer", label: "Kamusal ortamda erotik atmosfer" }
+  ],
+  [
+    { id: "duyusal", label: "Duyusal deneyim" },
+    { id: "gorsel", label: "Görsel ve atmosfer odaklı deneyim" },
+    { id: "uygulama", label: "Uygulamayı partnerine yapma" },
+    { id: "alinma", label: "Partnerin uygulamasını tercih etme" }
+  ],
+  [
+    { id: "izleme", label: "İzlemeyi tercih etme" },
+    { id: "izlenme", label: "İzlenmeyi tercih etme" },
+    { id: "karsilikli", label: "Karşılıklı deneyim" },
+    { id: "temas", label: "İdrarla temas içeren deneyimler" }
+  ],
+  [
+    { id: "ogretmen", label: "Öğretmen–öğrenci" },
+    { id: "doktor", label: "Doktor–hasta" },
+    { id: "patron", label: "Patron–çalışan" },
+    { id: "yabanci", label: "Yabancılar gibi tanışma" },
+    { id: "kurgusal", label: "Kurgusal karakterler" },
+    { id: "kendi", label: "Kendi senaryosunu oluşturma" },
+    { id: "tarihsel", label: "Tarihsel veya fantastik karakterler" }
+  ],
+  [
+    { id: "baskin", label: "Baskın ve kontrol edici senaryo" },
+    { id: "kacirilma", label: "Kaçırılma veya yakalanma temalı kurgu" },
+    { id: "direnis", label: "Direniyormuş gibi davranılan kurgu" },
+    { id: "kurallar", label: "Önceden belirlenmiş kurallara dayalı senaryo" }
+  ],
+  [
+    { id: "erteleme", label: "Orgazmı erteleme" },
+    { id: "izin-bekleme", label: "Orgazm için izin bekleme" },
+    { id: "zamanlama", label: "Zamanlamanın partner tarafından belirlenmesi" },
+    { id: "kurallar", label: "Belirli kurallara bağlı kontrol" }
+  ],
+  [
+    { id: "zamanlama", label: "Orgazmın zamanlamasını belirleme" },
+    { id: "erteleme", label: "Orgazmı ertelemesini isteme" },
+    { id: "izin", label: "Orgazm için izin verme" },
+    { id: "kurallar", label: "Önceden kararlaştırılmış kurallar koyma" }
+  ],
+  [
+    { id: "takma", label: "Ağız tıkacı takmayı tercih etme" },
+    { id: "taktirma", label: "Partnerine ağız tıkacı takmayı tercih etme" },
+    { id: "gorunum", label: "Görünüm odaklı kullanım" },
+    { id: "rol", label: "Rol yapma içinde kullanım" }
+  ],
+  [
+    { id: "bakma", label: "Ayaklara bakma" },
+    { id: "dokunma", label: "Ayaklara dokunma" },
+    { id: "masaj", label: "Ayak masajı" },
+    { id: "opme", label: "Ayak öpme" },
+    { id: "gorsel", label: "Ayakların görsel görünümüne ilgi" },
+    { id: "temas", label: "Ayakların cinsel temas içindeki rolüne ilgi" }
+  ],
+  [
+    { id: "penetrasyon", label: "Anal penetrasyon" },
+    { id: "parmak", label: "Parmakla anal uyarım" },
+    { id: "oyuncak", label: "Anal oyuncaklar" },
+    { id: "dis", label: "Dışarıdan anal uyarım" }
+  ],
+  [
+    { id: "eller", label: "Ellerin veya bileklerin bağlanması" },
+    { id: "ayaklar", label: "Ayakların bağlanması" },
+    { id: "hareket", label: "Hareket özgürlüğünün kısıtlanması" },
+    { id: "estetik", label: "Estetik bağlama" },
+    { id: "rol", label: "Bağlanmanın rol yapma içinde yer alması" }
+  ],
+  [
+    { id: "eller", label: "Elleri veya bilekleri bağlama" },
+    { id: "ayaklar", label: "Ayakları bağlama" },
+    { id: "hareket", label: "Hareket özgürlüğünü kısıtlama" },
+    { id: "estetik", label: "Estetik bağlama" },
+    { id: "rol", label: "Bağlamanın rol yapma içinde yer alması" }
+  ],
+  [
+    { id: "sozel", label: "Sözel aşağılama" },
+    { id: "rol", label: "Rol yapma içinde aşağılama" },
+    { id: "utandirma", label: "Utandırma temalı senaryo" },
+    { id: "otorite", label: "Güç ve otorite temalı aşağılama" }
+  ],
+  [
+    { id: "sozel", label: "Sözel aşağılanma" },
+    { id: "rol", label: "Rol yapma içinde aşağılanma" },
+    { id: "utandirilma", label: "Utandırılma temalı senaryo" },
+    { id: "otorite", label: "Güç ve otorite temalı aşağılanma" }
+  ],
+  [],
+  [
+    { id: "ffm", label: "FFM", full: "İki kadın, bir erkek (FFM)" },
+    { id: "mfm", label: "MFM", full: "İki erkek, bir kadın (MFM)" },
+    { id: "fff", label: "FFF", full: "Üç kadın (FFF)" },
+    { id: "mmm", label: "MMM", full: "Üç erkek (MMM)" },
+    { id: "any", label: "Üçlü deneyim", short: "Üçlü", full: "Üçlü deneyim (partnerlerin cinsiyeti fark etmez)" }
+  ],
+  [
+    { id: "fiziksel", label: "Fiziksel duyum odaklı dinamik" },
+    { id: "psikolojik", label: "Psikolojik güç dinamikleri" },
+    { id: "otorite", label: "Kontrol ve otorite teması" },
+    { id: "rol", label: "Rol yapma içinde sadistik tema" }
+  ],
+  [
+    { id: "fiziksel", label: "Fiziksel duyum odaklı dinamik" },
+    { id: "psikolojik", label: "Psikolojik güç dinamikleri" },
+    { id: "kontrol", label: "Kontrolü partnere bırakma" },
+    { id: "rol", label: "Rol yapma içinde mazoşistik tema" }
+  ],
+  [
+    { id: "uzerine", label: "Partnerin üzerine tükürme" },
+    { id: "uzerine-tercih", label: "Üzerine tükürülmesini tercih etme" },
+    { id: "agiza", label: "Ağıza tükürme" },
+    { id: "agiza-tercih", label: "Ağıza tükürülmesini tercih etme" }
+  ]
+];
+
+const VISIBLE_ANSWERS = new Set([1, 2, 3, 4, 5, "?"]);
+
+const PW = 1200;
+const COLS = 7;
+const COL_W = 150;
+const ROWS = Math.ceil(CATEGORIES.length / COLS);
+
+const POSTER_TOP = 310;
+const FINAL_BOTTOM_PAD = 20;
+const FOOTER_H = 120;
+
+const JAR_H = 170;
+const TITLE_GAP = 40;
+const TITLE_MAX_W = 140;
+const TITLE_LINE_GAP = 4;
+const TITLE_MAX_SIZE = 30;
+const TITLE_MIN_SIZE = 16;
+
+const SUB_SIZE = 15;
+const SUB_LINE_GAP = 3;
+const SUB_GAP = 14;
+
+const CELL_BOTTOM_PAD = 60;
+const ROW_MIN_H = 345;
+
+const COMPACT_MAX_H = 1900;
+const SINGLE_MAX_H = 2600;
+
+const PRESETS = ["#e63946","#ff5d8f","#ff8c42","#ffd23f","#7bd389","#2ec4b6","#3a86ff","#5b2a86","#c77dff","#8d1d3a","#8d5524","#2b2d42"];
+const INK = "#151311";
+const X_COLOR = "#d62828";
+const Q_COLOR = "#1d4ed8";
+
+const STORE = "kavanoz-v3";
+const STORE_V2 = "kavanoz-v2";
+const LEGACY_STORE = "kinkjars-v1";
+
+const $ = id => document.getElementById(id);
+
+const hexToRgb = h => {
+  h = String(h || "#e63946").replace("#", "");
+  if (h.length === 3) h = [...h].map(x => x + x).join("");
+  const n = parseInt(h, 16);
+  return [n >> 16 & 255, n >> 8 & 255, n & 255];
+};
+const rgbToHex = a => "#" + a.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+const css = (a, al = 1) => `rgba(${a.map(Math.round).join(",")},${al})`;
+const lighten = (a, t) => css(mix(a, [255, 255, 255], t));
+const darken = (a, t) => css(mix(a, [0, 0, 0], t));
+const lum = ([r, g, b]) => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+const validHex = h => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(String(h || ""));
+const normalizeHex = h => validHex(h) ? rgbToHex(hexToRgb(h)) : "#e63946";
+
+function normalizeAnswer(v) {
+  if (typeof v === "number" && Number.isInteger(v) && v >= 0 && v <= 5) return v;
+  if (typeof v === "string") {
+    const t = v.trim().toLowerCase();
+    if (/^[0-5]$/.test(t)) return Number(t);
+    if (t === "x") return "x";
+    if (t === "?") return "?";
+  }
+  return null;
+}
+
+const emptySubs = () => CATEGORIES.map(() => []);
+
+let state = {
+  name: "",
+  color: "#e63946",
+  answers: CATEGORIES.map(() => null),
+  subs: emptySubs()
+};
+
+function applyLoaded(s) {
+  if (!s || typeof s !== "object") return false;
+  state.name = typeof s.name === "string" ? s.name.slice(0, 24) : "";
+  state.color = normalizeHex(s.color);
+  if (Array.isArray(s.answers)) {
+    state.answers = CATEGORIES.map((_, i) => normalizeAnswer(s.answers[i]));
+  }
+  if (Array.isArray(s.subs)) {
+    state.subs = CATEGORIES.map((_, i) => {
+      const arr = Array.isArray(s.subs[i]) ? s.subs[i] : [];
+      const valid = new Set(SUBCATS[i].map(x => x.id));
+      return arr.filter(id => typeof id === "string" && valid.has(id));
+    });
+  }
+  return true;
+}
+
+try {
+  const raw3 = localStorage.getItem(STORE);
+  if (raw3) {
+    applyLoaded(JSON.parse(raw3));
+  } else {
+    const raw2 = localStorage.getItem(STORE_V2);
+    if (raw2) {
+      const s = JSON.parse(raw2);
+      applyLoaded(s);
+      if (s && Array.isArray(s.tripleSubs)) {
+        const valid = new Set(SUBCATS[24].map(x => x.id));
+        state.subs[24] = s.tripleSubs.filter(id => valid.has(id));
+      }
+    } else {
+      const raw1 = localStorage.getItem(LEGACY_STORE);
+      if (raw1) {
+        const s = JSON.parse(raw1);
+        if (s && typeof s === "object") {
+          state.name = typeof s.name === "string" ? s.name.slice(0, 24) : "";
+          state.color = normalizeHex(s.color);
+          if (Array.isArray(s.answers)) {
+            state.answers = CATEGORIES.map((_, i) => {
+              const n = normalizeAnswer(s.answers[i]);
+              return n === 0 ? null : n;
+            });
+          }
+        }
+      }
+    }
+  }
+} catch (e) {}
+
+CATEGORIES.forEach((_, i) => {
+  if (!VISIBLE_ANSWERS.has(state.answers[i])) state.subs[i] = [];
+});
+
+const persist = () => {
+  try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+};
+
+function toggleSub(catIndex, id) {
+  const arr = state.subs[catIndex];
+  const i = arr.indexOf(id);
+  if (i >= 0) arr.splice(i, 1);
+  else arr.push(id);
+  persist();
+  update();
+}
+
+function selectedSubLabels(catIndex) {
+  const sel = new Set(state.subs[catIndex]);
+  return SUBCATS[catIndex]
+    .filter(s => sel.has(s.id))
+    .map(s => s.short || s.label);
+}
+
+function rng(seed) {
+  return () => {
+    seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function wrapText(c, text, maxWidth) {
+  const words = text.split(" ");
+  const lines = [];
+  let current = "";
+  for (const word of words) {
+    const test = current ? current + " " + word : word;
+    if (c.measureText(test).width <= maxWidth || !current) {
+      current = test;
+    } else {
+      lines.push(current);
+      current = word;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
+function roundRect(c, x, y, w, h, r) {
+  c.moveTo(x + r, y);
+  c.arcTo(x + w, y, x + w, y + h, r);
+  c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r);
+  c.arcTo(x, y, x + w, y, r);
+  c.closePath();
+}
+function bodyPath(c) {
+  c.beginPath();
+  c.moveTo(14, 32);
+  c.quadraticCurveTo(4, 36, 4, 60);
+  c.lineTo(4, 146);
+  c.quadraticCurveTo(4, 170, 28, 170);
+  c.lineTo(68, 170);
+  c.quadraticCurveTo(92, 170, 92, 146);
+  c.lineTo(92, 60);
+  c.quadraticCurveTo(92, 36, 82, 32);
+  c.closePath();
+}
+function drawLid(c, dx = 0, dy = 0, rot = 0) {
+  c.save();
+  c.translate(48 + dx, 12 + dy);
+  c.rotate(rot);
+  c.translate(-48, -12);
+  c.beginPath();
+  roundRect(c, 6, 0, 84, 24, 6);
+  c.fillStyle = "#fff";
+  c.fill();
+  c.lineWidth = 4.5;
+  c.strokeStyle = INK;
+  c.stroke();
+  c.lineWidth = 2.4;
+  c.beginPath();
+  for (const y of [8, 16]) {
+    c.moveTo(10, y);
+    c.quadraticCurveTo(48, y + 3, 86, y);
+  }
+  c.stroke();
+  c.restore();
+}
+function teardrop(c, x, y, r, ox, oy) {
+  const a = Math.atan2(oy - y, ox - x);
+  c.moveTo(x + Math.cos(a) * r * 2.5, y + Math.sin(a) * r * 2.5);
+  c.arc(x, y, r, a + Math.PI / 2, a + Math.PI * 1.5, false);
+  c.closePath();
+}
+function heart(c, x, y, s) {
+  c.moveTo(x, y + s * 0.9);
+  c.bezierCurveTo(x - s * 1.6, y - s * 0.1, x - s * 0.8, y - s * 1.3, x, y - s * 0.45);
+  c.bezierCurveTo(x + s * 0.8, y - s * 1.3, x + s * 1.6, y - s * 0.1, x, y + s * 0.9);
+  c.closePath();
+}
+function blob(c, pts) {
+  const n = pts.length;
+  const mid = i => [(pts[i][0] + pts[(i + 1) % n][0]) / 2, (pts[i][1] + pts[(i + 1) % n][1]) / 2];
+  let m = mid(n - 1);
+  c.moveTo(m[0], m[1]);
+  for (let i = 0; i < n; i++) {
+    m = mid(i);
+    c.quadraticCurveTo(pts[i][0], pts[i][1], m[0], m[1]);
+  }
+  c.closePath();
+}
+function makeDrips(r, n, base, minL, maxL) {
+  const span = 100 / n;
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const w = 9 + r() * 6;
+    out.push({
+      cx: -2 + span * (i + 0.5) + (r() - 0.5) * span * 0.35,
+      w,
+      L: minL + r() * (maxL - minL)
+    });
+  }
+  out.forEach(d => d.L = Math.min(d.L, 164 - base - d.w * 0.6));
+  return out;
+}
+function collar(c, base, drips) {
+  c.moveTo(4, 18);
+  c.lineTo(92, 18);
+  c.quadraticCurveTo(100, 22, 99, base - 4);
+  c.quadraticCurveTo(99, base, 95, base);
+  for (const d of [...drips].sort((a, b) => b.cx - a.cx)) {
+    const r = d.w / 2;
+    c.lineTo(d.cx + r + 4, base);
+    c.quadraticCurveTo(d.cx + r, base, d.cx + r, base + 5);
+    c.lineTo(d.cx + r * 0.8, base + d.L);
+    c.arc(d.cx, base + d.L, r * 1.12, 0, Math.PI, false);
+    c.lineTo(d.cx - r, base + 5);
+    c.quadraticCurveTo(d.cx - r, base, d.cx - r - 4, base);
+  }
+  c.lineTo(1, base);
+  c.quadraticCurveTo(-3, base, -3, base - 4);
+  c.quadraticCurveTo(-4, 22, 4, 18);
+  c.closePath();
+}
+
+function jarParams(idx) {
+  const r = rng(idx * 7919 + 101);
+  const row = Math.floor(idx / COLS);
+  const style = (idx % COLS + row * 3) % 6;
+  const side = r() < 0.5 ? -1 : 1;
+  const P = { style, phase: r() * 6.28, r };
+
+  if (style === 0) {
+    P.base = 40 + r() * 8;
+    P.drips = makeDrips(r, 4 + (r() < 0.5 ? 1 : 0), P.base, 8, 125);
+  }
+  if (style === 1) {
+    P.base = 40;
+    P.drips = makeDrips(r, 3, P.base, 30, 90);
+    P.drips[Math.floor(r() * 3)].L = 999;
+    P.drips.forEach(d => d.L = Math.min(d.L, 164 - P.base - d.w * 0.6));
+    const pts = [];
+    const rx = 64 + r() * 10;
+    const ry = 10 + r() * 3;
+    for (let i = 0; i < 14; i++) {
+      const a = i / 14 * Math.PI * 2;
+      const k = 0.86 + r() * 0.24;
+      pts.push([48 + Math.cos(a) * rx * k, 170 + Math.sin(a) * ry * k]);
+    }
+    P.puddle = pts;
+  }
+  if (style === 2) {
+    P.base = 38;
+    P.drips = makeDrips(r, 3, P.base, 6, 45);
+    P.foam = [];
+    for (let i = 0; i < 14; i++) {
+      const x = 48 + (r() - 0.5) * 88;
+      P.foam.push([x, 28 - (1 - Math.abs(x - 48) / 46) * 34 - r() * 6, 7 + r() * 8]);
+    }
+    P.lid = { dx: side * (14 + r() * 8), dy: -24, rot: side * (0.2 + r() * 0.12) };
+  }
+  if (style === 3) {
+    P.base = 40;
+    P.drips = makeDrips(r, 4, P.base, 6, 70);
+    P.drops = [
+      [2 + r() * 8, -26, 4], [-10, -4 + r() * 6, 3.5], [-15, 20 + r() * 8, 3],
+      [92 + r() * 6, -24, 4], [106, -2 + r() * 6, 3.5], [111, 22 + r() * 8, 3]
+    ];
+    P.origin = [48, -20];
+    P.lid = { dx: side * 36, dy: -26, rot: side * 0.6 };
+  }
+  if (style === 4) {
+    P.base = 42;
+    P.drips = makeDrips(r, 4, P.base, 10, 95);
+    P.drops = [];
+    P.origin = [48, 24];
+    for (let i = 0; i < 6; i++) {
+      const s = i % 2 ? 1 : -1;
+      P.drops.push([48 + s * (60 + r() * 12), 4 + r() * 100, 2.6 + r() * 2]);
+    }
+    P.splats = [[-12 - r() * 6, 172, 7], [108 + r() * 6, 173, 6], [118, 166, 2.5], [-22, 166, 2.5]];
+  }
+  if (style === 5) {
+    P.base = 44;
+    P.drips = makeDrips(r, 5, P.base, 6, 105);
+    P.hearts = [
+      [14 + r() * 8, -14 - r() * 6, 7 + r() * 2],
+      [48 + (r() - 0.5) * 10, -26, 9 + r() * 2],
+      [80 + r() * 8, -12 - r() * 6, 6 + r() * 2]
+    ];
+  }
+  return P;
+}
+
+let _emojiOK = null;
+function emojiOK() {
+  if (_emojiOK !== null) return _emojiOK;
+  try {
+    const t = document.createElement("canvas");
+    t.width = t.height = 24;
+    const tc = t.getContext("2d");
+    tc.font = '20px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Android Emoji","Segoe UI Symbol",sans-serif';
+    tc.textAlign = "center";
+    tc.textBaseline = "middle";
+    tc.fillStyle = "#000";
+    tc.fillText("🚫", 12, 12);
+    const d = tc.getImageData(0, 0, 24, 24).data;
+    for (let i = 0; i < d.length; i += 4) {
+      const r = d[i], g = d[i + 1], b = d[i + 2], a = d[i + 3];
+      if (a > 0 && (Math.abs(r - g) > 40 || Math.abs(g - b) > 40 || Math.abs(r - b) > 40)) {
+        _emojiOK = true;
+        return true;
+      }
+    }
+  } catch (e) {}
+  _emojiOK = false;
+  return false;
+}
+
+const _qMeasureCache = {};
+function measureQGlyph(font) {
+  if (_qMeasureCache[font]) return _qMeasureCache[font];
+  let result = { xOffset: 0, yOffset: 24, hasMetrics: false };
+  try {
+    const probe = document.createElement("canvas");
+    probe.width = probe.height = 32;
+    const pc = probe.getContext("2d");
+    pc.font = font;
+    pc.textAlign = "center";
+    pc.textBaseline = "alphabetic";
+    const m = pc.measureText("？");
+    const asc = m.actualBoundingBoxAscent;
+    const desc = m.actualBoundingBoxDescent;
+    const left = m.actualBoundingBoxLeft;
+    const right = m.actualBoundingBoxRight;
+    if (typeof asc === "number" && typeof desc === "number" &&
+        typeof left === "number" && typeof right === "number" &&
+        (asc > 0 || desc > 0 || left !== 0 || right !== 0)) {
+      result = {
+        xOffset: (left - right) / 2,
+        yOffset: (asc - desc) / 2,
+        hasMetrics: true
+      };
+    }
+  } catch (e) {}
+  _qMeasureCache[font] = result;
+  return result;
+}
+
+function drawSpecial(c, answer) {
+  c.save();
+  c.textAlign = "center";
+  const cx = 48, cy = 101;
+
+  if (answer === "x") {
+    c.beginPath();
+    c.arc(cx, cy, 32, 0, Math.PI * 2);
+    c.fillStyle = "rgba(255,255,255,0.92)";
+    c.fill();
+
+    if (emojiOK()) {
+      c.font = '52px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Android Emoji","Segoe UI Symbol",sans-serif';
+      c.textBaseline = "middle";
+      c.fillStyle = "#000";
+      c.fillText("🚫", cx, cy);
+    } else {
+      const R = 27;
+      c.beginPath();
+      c.arc(cx, cy, R, 0, Math.PI * 2);
+      c.fillStyle = X_COLOR;
+      c.fill();
+      c.save();
+      c.translate(cx, cy);
+      c.rotate(-Math.PI / 4);
+      c.fillStyle = "#fff";
+      c.fillRect(-R + 4, -5, (R - 4) * 2, 10);
+      c.restore();
+    }
+  } else if (answer === "?") {
+    const font = '700 80px "Arial Narrow", Impact, "Franklin Gothic Medium", sans-serif';
+    c.font = font;
+    c.textBaseline = "alphabetic";
+    const { xOffset, yOffset } = measureQGlyph(font);
+    const drawX = cx + xOffset;
+    const baselineY = cy + yOffset;
+    c.lineJoin = "round";
+    c.lineWidth = 12;
+    c.strokeStyle = "#fff";
+    c.strokeText("？", drawX, baselineY);
+    c.fillStyle = Q_COLOR;
+    c.fillText("？", drawX, baselineY);
+  }
+  c.restore();
+}
+
+function drawJar(c, idx, answer, rgb) {
+  const level = typeof answer === "number" ? answer : 0;
+  const special = answer === "x" || answer === "?";
+  const P = jarParams(idx);
+  const r = P.r;
+  const fill = css(rgb);
+
+  c.save();
+  c.lineJoin = "round";
+  c.lineCap = "round";
+
+  if (level === 5 && P.puddle) {
+    c.beginPath();
+    blob(c, P.puddle);
+    c.lineWidth = 7;
+    c.strokeStyle = INK;
+    c.stroke();
+    c.fillStyle = fill;
+    c.fill();
+    c.beginPath();
+    c.ellipse(20, 172, 10, 2.5, 0, 0, 7);
+    c.fillStyle = "rgba(255,255,255,.55)";
+    c.fill();
+  }
+
+  c.save();
+  bodyPath(c);
+  c.fillStyle = "#fff";
+  c.fill();
+  c.clip();
+
+  if (level > 0) {
+    const top = 32, bottom = 170;
+    const frac = [0, .16, .36, .58, .8, 1][level];
+    const ly = level === 5 ? 28 : bottom - (bottom - top) * frac;
+    const amp = level === 5 ? 0 : 2.2;
+    const g = c.createLinearGradient(0, ly, 0, bottom);
+    g.addColorStop(0, lighten(rgb, .12));
+    g.addColorStop(1, darken(rgb, .2));
+    const surf = () => {
+      for (let x = -4; x <= 100; x += 4) c.lineTo(x, ly + Math.sin(x * 0.11 + P.phase) * amp);
+    };
+    c.beginPath();
+    c.moveTo(-4, ly);
+    surf();
+    c.lineTo(100, 180);
+    c.lineTo(-4, 180);
+    c.closePath();
+    c.fillStyle = g;
+    c.fill();
+
+    c.beginPath();
+    c.moveTo(-4, ly);
+    surf();
+    c.strokeStyle = lighten(rgb, .45);
+    c.lineWidth = 3;
+    c.stroke();
+
+    c.strokeStyle = css(mix(rgb, [255, 255, 255], .6), .85);
+    c.lineWidth = 1.6;
+    for (let i = 0; i < 2 + level; i++) {
+      const bx = 18 + r() * 60;
+      const by = ly + 10 + r() * Math.max(0, bottom - ly - 22);
+      const br = 1.5 + r() * 2.6;
+      c.beginPath();
+      c.arc(bx, by, br, 0, 7);
+      c.stroke();
+    }
+  }
+
+  c.fillStyle = "rgba(255,255,255,.5)";
+  c.beginPath();
+  roundRect(c, 11, 50, 6, 78, 3);
+  roundRect(c, 11, 134, 6, 10, 3);
+  c.fill();
+  c.restore();
+
+  bodyPath(c);
+  c.lineWidth = 4.5;
+  c.strokeStyle = INK;
+  c.stroke();
+
+  c.lineWidth = 2.5;
+  c.beginPath();
+  c.moveTo(18, 160);
+  c.quadraticCurveTo(26, 165, 38, 164);
+  c.moveTo(58, 164);
+  c.quadraticCurveTo(70, 165, 78, 160);
+  c.stroke();
+
+  c.beginPath();
+  roundRect(c, 12, 20, 72, 14, 4);
+  c.fillStyle = level === 5 ? fill : "#fff";
+  c.fill();
+  c.lineWidth = 4;
+  c.stroke();
+
+  if (level === 5) {
+    const shapes = [];
+    const foamFill = lighten(rgb, .55);
+
+    if (P.style === 3) {
+      shapes.push({
+        fill,
+        path: () => {
+          c.moveTo(34, 24);
+          c.quadraticCurveTo(40, 4, 36, -8);
+          c.quadraticCurveTo(26, -20, 38, -24);
+          c.quadraticCurveTo(44, -36, 52, -25);
+          c.quadraticCurveTo(60, -34, 64, -21);
+          c.quadraticCurveTo(72, -14, 60, -8);
+          c.quadraticCurveTo(56, 4, 62, 24);
+          c.closePath();
+        }
+      });
+    }
+
+    shapes.push({ fill, path: () => collar(c, P.base, P.drips) });
+    if (P.foam) for (const [x, y, rad] of P.foam) shapes.push({ fill: foamFill, path: () => c.arc(x, y, rad, 0, 7) });
+    if (P.drops) for (const [x, y, rad] of P.drops) shapes.push({ fill, path: () => teardrop(c, x, y, rad, P.origin[0], P.origin[1]) });
+    if (P.splats) for (const [x, y, rad] of P.splats) shapes.push({ fill, path: () => c.ellipse(x, y, rad, rad * 0.4, 0, 0, 7) });
+    if (P.hearts) for (const [x, y, s] of P.hearts) shapes.push({ fill, path: () => heart(c, x, y, s) });
+
+    c.lineWidth = 7;
+    c.strokeStyle = INK;
+    for (const s of shapes) {
+      c.beginPath();
+      s.path();
+      c.stroke();
+    }
+    for (const s of shapes) {
+      c.beginPath();
+      s.path();
+      c.fillStyle = s.fill;
+      c.fill();
+    }
+
+    c.strokeStyle = "rgba(255,255,255,.6)";
+    c.lineWidth = 2.5;
+    c.beginPath();
+    c.moveTo(6, P.base - 14);
+    c.quadraticCurveTo(8, 24, 18, 22);
+    for (const d of P.drips) {
+      if (d.L > 22) {
+        c.moveTo(d.cx - d.w * 0.22, P.base + 6);
+        c.lineTo(d.cx - d.w * 0.22, P.base + d.L - 6);
+      }
+    }
+    if (P.hearts) {
+      for (const [x, y, s] of P.hearts) {
+        c.moveTo(x - s * 0.75, y - s * 0.25);
+        c.quadraticCurveTo(x - s * 0.7, y - s * 0.7, x - s * 0.35, y - s * 0.75);
+      }
+    }
+    c.stroke();
+
+    if (P.foam) {
+      c.fillStyle = "rgba(255,255,255,.85)";
+      for (const [x, y, rad] of P.foam.slice(0, 6)) {
+        c.beginPath();
+        c.arc(x - rad * 0.35, y - rad * 0.35, rad * 0.22, 0, 7);
+        c.fill();
+      }
+    }
+  }
+
+  if (level === 5 && P.lid) drawLid(c, P.lid.dx, P.lid.dy, P.lid.rot);
+  else drawLid(c);
+
+  if (special) drawSpecial(c, answer);
+  c.restore();
+}
+
+const TITLE_FONT = size => `600 ${size}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+const SUB_FONT = size => `400 ${size}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+
+function measureCell(c, catIndex) {
+  const cat = CATEGORIES[catIndex];
+
+  let titleSize = TITLE_MAX_SIZE;
+  let titleLines;
+  for (;;) {
+    c.font = TITLE_FONT(titleSize);
+    titleLines = wrapText(c, cat.title, TITLE_MAX_W);
+    if (titleLines.length <= 3 || titleSize <= TITLE_MIN_SIZE) break;
+    titleSize -= 2;
+  }
+
+  const titleFirstBaseline = JAR_H + TITLE_GAP + titleSize;
+  let bottom = titleFirstBaseline
+    + (titleLines.length - 1) * (titleSize + TITLE_LINE_GAP)
+    + titleSize * 0.28;
+
+  const labels = selectedSubLabels(catIndex);
+  let subLines = [];
+  let subFirstBaseline = 0;
+
+  if (labels.length) {
+    const text = "(" + labels.join(", ") + ")";
+    c.font = SUB_FONT(SUB_SIZE);
+    subLines = wrapText(c, text, TITLE_MAX_W);
+    subFirstBaseline = bottom + SUB_GAP + SUB_SIZE;
+    bottom = subFirstBaseline
+      + (subLines.length - 1) * (SUB_SIZE + SUB_LINE_GAP)
+      + SUB_SIZE * 0.28;
+  }
+
+  return {
+    catIndex,
+    titleSize,
+    titleLines,
+    titleFirstBaseline,
+    subLines,
+    subFirstBaseline,
+    height: bottom + CELL_BOTTOM_PAD
+  };
+}
+
+function buildLayout() {
+  const measure = document.createElement("canvas").getContext("2d");
+  const cells = CATEGORIES.map((_, i) => measureCell(measure, i));
+
+  const rows = [];
+  for (let r = 0; r < ROWS; r++) {
+    const rowCells = cells.slice(r * COLS, (r + 1) * COLS);
+    let contentH = 0;
+    for (const cell of rowCells) contentH = Math.max(contentH, cell.height);
+    const rowH = Math.max(ROW_MIN_H, contentH);
+    rows.push({ height: rowH, contentHeight: contentH, cells: rowCells });
+  }
+
+  let total = POSTER_TOP;
+  for (let r = 0; r < rows.length; r++) {
+    total += r === rows.length - 1 ? rows[r].contentHeight : rows[r].height;
+  }
+  total += FINAL_BOTTOM_PAD;
+
+  let tier = 1;
+  if (total > SINGLE_MAX_H) tier = 3;
+  else if (total > COMPACT_MAX_H) tier = 2;
+
+  const pages = tier === 3
+    ? paginate(rows)
+    : [{ rows, height: total }];
+
+  return { rows, total, tier, pages };
+}
+
+function paginate(rows) {
+  const pages = [];
+  let current = { rows: [], height: POSTER_TOP + FOOTER_H };
+
+  for (const row of rows) {
+    if (current.rows.length && current.height + row.height > SINGLE_MAX_H) {
+      current.height = Math.round(current.height);
+      pages.push(current);
+      current = { rows: [], height: POSTER_TOP + FOOTER_H };
+    }
+    current.rows.push(row);
+    current.height += row.height;
+  }
+
+  if (current.rows.length) {
+    const lastRow = current.rows[current.rows.length - 1];
+    current.height = Math.round(current.height - lastRow.height + lastRow.contentHeight);
+    pages.push(current);
+  }
+
+  return pages;
+}
+
+function drawHeader(c, pageIndex, pageCount) {
+  c.textAlign = "left";
+  c.textBaseline = "alphabetic";
+  c.fillStyle = INK;
+
+  /* PNG başlığı: "Arzu Kavanozu". Uzun başlık mevcut alana sığmazsa
+     font boyutu otomatik küçültülür; konum/alt çizgi korunur. */
+  const title = "Arzu Kavanozu";
+  const lineW = 300;
+  const gap = 26;
+  const availW = PW - lineW - gap - 80;
+  let titleSize = 104;
+  c.font = `700 ${titleSize}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+  let tw = c.measureText(title).width;
+  while (tw > availW && titleSize > 56) {
+    titleSize -= 4;
+    c.font = `700 ${titleSize}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+    tw = c.measureText(title).width;
+  }
+
+  const x0 = (PW - lineW - gap - tw) / 2;
+  const base = 140;
+
+  c.fillRect(x0, base - 5, lineW, 7);
+  c.fillText(title, x0 + lineW + gap, base);
+
+  const name = state.name.trim();
+  if (name) {
+    let size = 66;
+    c.font = `${size}px "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive`;
+    while (c.measureText(name).width > lineW - 12 && size > 20) {
+      size -= 2;
+      c.font = `${size}px "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive`;
+    }
+    c.textAlign = "center";
+    c.fillText(name, x0 + lineW / 2, base - 18);
+  }
+
+  c.textAlign = "center";
+  c.font = "500 27px 'Arial Narrow', Impact, sans-serif";
+  c.fillStyle = "#555";
+  c.fillText("😶 0   🙂 1   😊 2   😏 3   😍 4   🔥 5", PW / 2, 198);
+
+  c.font = "600 25px 'Arial Narrow', Impact, sans-serif";
+  c.fillText("🚫 = kesin sınır · ？ = merak ediyorum", PW / 2, 232);
+
+  if (pageCount > 1) {
+    c.textAlign = "right";
+    c.font = "600 22px 'Arial Narrow', Impact, sans-serif";
+    c.fillStyle = "#999";
+    c.fillText(`${pageIndex + 1} / ${pageCount}`, PW - 40, 56);
+
+    if (pageIndex > 0) {
+      c.textAlign = "center";
+      c.font = "500 20px 'Arial Narrow', Impact, sans-serif";
+      c.fillText("(devam)", PW / 2, 268);
+    }
+  }
+}
+
+function drawCell(c, cell, cx, top, rgb) {
+  c.save();
+  c.translate(cx - 48, top);
+  drawJar(c, cell.catIndex, state.answers[cell.catIndex], rgb);
+  c.restore();
+
+  c.textAlign = "center";
+  c.textBaseline = "alphabetic";
+  c.fillStyle = INK;
+  c.font = TITLE_FONT(cell.titleSize);
+  cell.titleLines.forEach((line, k) => {
+    c.fillText(line, cx, top + cell.titleFirstBaseline + k * (cell.titleSize + TITLE_LINE_GAP));
+  });
+
+  if (cell.subLines.length) {
+    c.fillStyle = "#555";
+    c.font = SUB_FONT(SUB_SIZE);
+    cell.subLines.forEach((line, k) => {
+      c.fillText(line, cx, top + cell.subFirstBaseline + k * (SUB_SIZE + SUB_LINE_GAP));
+    });
+  }
+}
+
+function drawPageContent(c, page, pageIndex, pageCount) {
+  const rgb = hexToRgb(state.color);
+  const H = page.height;
+
+  c.fillStyle = "#fff";
+  c.fillRect(0, 0, PW, H);
+
+  drawHeader(c, pageIndex, pageCount);
+
+  let y = POSTER_TOP;
+  for (const row of page.rows) {
+    row.cells.forEach((cell, col) => {
+      const cx = PW / 2 + (col - (COLS - 1) / 2) * COL_W;
+      drawCell(c, cell, cx, y, rgb);
+    });
+    y += row.height;
+  }
+
+  if (pageCount > 1) {
+    c.textAlign = "center";
+    c.textBaseline = "alphabetic";
+    c.fillStyle = "#999";
+    c.font = "500 24px 'Arial Narrow', Impact, sans-serif";
+    c.fillText(`Sayfa ${pageIndex + 1} / ${pageCount}`, PW / 2, H - 54);
+  }
+}
+
+function renderPage(page, index, count, scale) {
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(PW * scale);
+  canvas.height = Math.max(1, Math.round(page.height * scale));
+  const c = canvas.getContext("2d");
+  c.setTransform(scale, 0, 0, scale, 0, 0);
+  drawPageContent(c, page, index, count);
+  return canvas;
+}
+
+function drawMini(canvas, idx, answer, rgb) {
+  canvas.width = 152;
+  canvas.height = 248;
+  const c = canvas.getContext("2d");
+  c.clearRect(0, 0, 152, 248);
+  c.translate(28, 62);
+  drawJar(c, idx, answer, rgb);
+}
+
+const qWrap = $("questions");
+const minis = [];
+const qEls = [];
+const subUI = CATEGORIES.map(() => null);
+
+const CHOICES = [
+  { value: 0, text: "😶", aria: "hiç ilgi yok" },
+  { value: 1, text: "🙂", aria: "az ilgi" },
+  { value: 2, text: "😊", aria: "biraz ilgi" },
+  { value: 3, text: "😏", aria: "orta düzeyde ilgi" },
+  { value: 4, text: "😍", aria: "yüksek ilgi" },
+  { value: 5, text: "🔥", aria: "çok yüksek ilgi" },
+  { value: "x", text: "🚫", aria: "kesin sınır" },
+  { value: "?", text: "？", aria: "merak ediyorum" }
+];
+
+CATEGORIES.forEach((cat, i) => {
+  const fullText = `${cat.title} (${cat.desc})`;
+  const q = document.createElement("div");
+  q.className = "q";
+  q.dataset.index = String(i);
+
+  const canvas = document.createElement("canvas");
+  canvas.setAttribute("aria-hidden", "true");
+
+  const body = document.createElement("div");
+  const qnum = document.createElement("div");
+  qnum.className = "qnum";
+  qnum.textContent = `${i + 1} / ${CATEGORIES.length}`;
+
+  const qlabel = document.createElement("div");
+  qlabel.className = "qlabel";
+  const titleText = document.createTextNode(cat.title + " ");
+  const descSpan = document.createElement("span");
+  descSpan.className = "qdesc";
+  descSpan.textContent = `(${cat.desc})`;
+  qlabel.append(titleText, descSpan);
+
+  const scale = document.createElement("div");
+  scale.className = "scale";
+  scale.setAttribute("role", "group");
+  scale.setAttribute("aria-label", cat.title);
+
+  body.append(qnum, qlabel, scale);
+
+  const subs = SUBCATS[i];
+  if (subs.length) {
+    const subsWrap = document.createElement("div");
+    subsWrap.className = "subs";
+    subsWrap.hidden = true;
+
+    const subsTitle = document.createElement("div");
+    subsTitle.className = "subs-title";
+    subsTitle.textContent = "Alt kategoriler — istediğin kadarını seç:";
+
+    const subsList = document.createElement("div");
+    subsList.className = "subs-list";
+    subsList.setAttribute("role", "group");
+    subsList.setAttribute("aria-label", `${cat.title}: alt kategoriler`);
+
+    const buttons = {};
+    subs.forEach(sub => {
+      const sbtn = document.createElement("button");
+      sbtn.type = "button";
+      sbtn.className = "sub-btn";
+      sbtn.dataset.sub = sub.id;
+      sbtn.textContent = sub.full || sub.label;
+      sbtn.setAttribute("aria-pressed", "false");
+      sbtn.onclick = () => toggleSub(i, sub.id);
+      subsList.appendChild(sbtn);
+      buttons[sub.id] = sbtn;
+    });
+
+    subsWrap.append(subsTitle, subsList);
+    body.appendChild(subsWrap);
+    subUI[i] = { wrap: subsWrap, buttons };
+  }
+
+  q.append(canvas, body);
+  qWrap.append(q);
+
+  const buttons = [];
+  CHOICES.forEach(choice => {
+    const b = document.createElement("button");
+    b.type = "button";
+    if (choice.value === "?") {
+      const span = document.createElement("span");
+      span.className = "qm-glyph";
+      span.textContent = choice.text;
+      b.appendChild(span);
+    } else {
+      b.textContent = choice.text;
+    }
+    b.dataset.val = String(choice.value);
+    b.setAttribute("aria-label", `${fullText}: ${choice.aria}`);
+    b.onclick = () => {
+      q.classList.remove("missing");
+      const current = state.answers[i];
+      const newAns = current === choice.value ? null : choice.value;
+      state.answers[i] = newAns;
+      if (!VISIBLE_ANSWERS.has(newAns)) state.subs[i] = [];
+      persist();
+      update();
+    };
+    scale.append(b);
+    buttons.push(b);
+  });
+
+  minis.push({ canvas, buttons });
+  qEls.push(q);
+});
+
+const sw = $("swatches");
+PRESETS.forEach(hex => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "sw";
+  b.style.background = hex;
+  b.dataset.hex = hex;
+  b.setAttribute("aria-label", "Renk " + hex);
+  b.onclick = () => setColor(hex);
+  sw.appendChild(b);
+});
+
+["r", "g", "b"].forEach((k, n) => {
+  $(k).addEventListener("input", () => {
+    const a = hexToRgb(state.color);
+    a[n] = +$(k).value;
+    setColor(rgbToHex(a));
+  });
+});
+
+$("hex").addEventListener("input", e => {
+  let v = e.target.value.trim();
+  if (!v.startsWith("#")) v = "#" + v;
+  if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) setColor(rgbToHex(hexToRgb(v)), true);
+});
+
+$("surprise").onclick = () => {
+  const h = Math.random() * 360;
+  const s = 0.65 + Math.random() * 0.3;
+  const l = 0.45 + Math.random() * 0.2;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => 255 * (l - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1)));
+  setColor(rgbToHex([f(0), f(8), f(4)]));
+};
+
+$("name").value = state.name;
+$("name").addEventListener("input", e => {
+  state.name = e.target.value.slice(0, 24);
+  persist();
+  update();
+});
+
+function setColor(hex, fromHexBox) {
+  state.color = normalizeHex(hex).toLowerCase();
+  persist();
+  if (!fromHexBox) $("hex").value = state.color.toUpperCase();
+  update();
+}
+
+let queued = false;
+function update() {
+  if (queued) return;
+  queued = true;
+  requestAnimationFrame(() => {
+    queued = false;
+    render();
+  });
+}
+
+function toast(msg) {
+  let el = $("toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "toast";
+    el.setAttribute("role", "alert");
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 4000);
+}
+
+let statusActive = false;
+function setStatus(msg, active = true) {
+  const el = $("status");
+  el.textContent = msg;
+  el.hidden = !msg;
+  statusActive = active;
+}
+function missingIndexes() {
+  return state.answers.map((a, i) => a === null ? i : -1).filter(i => i >= 0);
+}
+function updateValidationStatus() {
+  if (!statusActive) return;
+  const missing = missingIndexes();
+  if (missing.length > 0) {
+    setStatus(`${missing.length} soru eksik. Kaydetmeden önce tüm soruları yanıtlayın.`, true);
+  } else {
+    setStatus("", false);
+  }
+}
+
+function drawPreview() {
+  const layout = buildLayout();
+  const canvas = $("poster");
+  const page = layout.pages[0];
+
+  canvas.width = PW;
+  canvas.height = Math.max(1, Math.round(page.height));
+  const c = canvas.getContext("2d");
+  c.setTransform(1, 0, 0, 1, 0, 0);
+  drawPageContent(c, page, 0, layout.pages.length);
+
+  const note = $("tierNote");
+  if (layout.pages.length > 1) {
+    note.hidden = false;
+    note.textContent = `Poster ${layout.pages.length} sayfaya bölündü. Kaydettiğinde çok sayfalı PNG veya tek bir PDF oluşturabilirsin.`;
+  } else {
+    note.hidden = true;
+    note.textContent = "";
+  }
+}
+
+/* ===== ？ glifinin görsel merkezini ölçüp kutuya hizala ===== */
+let _qGlyphOffsetCache = null;
+
+function measureQGlyphOffset() {
+  if (_qGlyphOffsetCache !== null) return _qGlyphOffsetCache;
+
+  const sampleSpan = document.querySelector(".scale button[data-val='?'] .qm-glyph");
+  if (!sampleSpan) { _qGlyphOffsetCache = false; return false; }
+
+  const cs = getComputedStyle(sampleSpan);
+  const fontSize = parseFloat(cs.fontSize);
+  if (!fontSize) { _qGlyphOffsetCache = false; return false; }
+
+  const fontSpec = `${cs.fontStyle} ${cs.fontWeight} ${fontSize}px ${cs.fontFamily}`;
+
+  const C = 100;
+  const probe = document.createElement("canvas");
+  probe.width = probe.height = C;
+  const pc = probe.getContext("2d", { willReadFrequently: true });
+  pc.font = fontSpec;
+  pc.textAlign = "center";
+  pc.textBaseline = "middle";
+  pc.fillStyle = "#000";
+  pc.fillText("？", C / 2, C / 2);
+
+  try {
+    const data = pc.getImageData(0, 0, C, C).data;
+    let minX = C, maxX = -1, minY = C, maxY = -1;
+    for (let y = 0; y < C; y++) {
+      for (let x = 0; x < C; x++) {
+        if (data[(y * C + x) * 4 + 3] > 20) {
+          if (x < minX) minX = x;
+          if (x > maxX) maxX = x;
+          if (y < minY) minY = y;
+          if (y > maxY) maxY = y;
+        }
+      }
+    }
+    if (maxX < 0) { _qGlyphOffsetCache = false; return false; }
+
+    _qGlyphOffsetCache = {
+      dx: C / 2 - (minX + maxX) / 2,
+      dy: C / 2 - (minY + maxY) / 2
+    };
+    return _qGlyphOffsetCache;
+  } catch (e) {
+    _qGlyphOffsetCache = false;
+    return false;
+  }
+}
+
+function alignQGlyphs() {
+  const offset = measureQGlyphOffset();
+  if (!offset) return;
+
+  const transform = (Math.abs(offset.dx) < 0.15 && Math.abs(offset.dy) < 0.15)
+    ? ""
+    : `translate(${offset.dx.toFixed(2)}px, ${offset.dy.toFixed(2)}px)`;
+
+  document.querySelectorAll(".scale button[data-val='?'] .qm-glyph").forEach(span => {
+    span.style.transform = transform;
+  });
+}
+
+function render() {
+  const rgb = hexToRgb(state.color);
+  const root = document.documentElement.style;
+  root.setProperty("--c", state.color);
+  root.setProperty("--on-c", lum(rgb) > 0.6 ? INK : "#fff");
+
+  ["r", "g", "b"].forEach((k, n) => {
+    $(k).value = rgb[n];
+    $(k + "v").textContent = rgb[n];
+    const lo = [...rgb];
+    const hi = [...rgb];
+    lo[n] = 0;
+    hi[n] = 255;
+    $(k).style.background = `linear-gradient(to right, ${css(lo)}, ${css(hi)})`;
+  });
+
+  if (document.activeElement !== $("hex")) $("hex").value = state.color.toUpperCase();
+  [...sw.children].forEach(b => b.setAttribute("aria-pressed", b.dataset.hex === state.color));
+
+  CATEGORIES.forEach((_, i) => {
+    if (!VISIBLE_ANSWERS.has(state.answers[i]) && state.subs[i].length) {
+      state.subs[i] = [];
+      persist();
+    }
+  });
+
+  drawMini($("pv1"), 3, 2, rgb);
+  drawMini($("pv2"), 9, 4, rgb);
+  drawMini($("pv3"), 2, 5, rgb);
+
+  minis.forEach((m, i) => {
+    drawMini(m.canvas, i, state.answers[i], rgb);
+    m.buttons.forEach(b => {
+      const raw = b.dataset.val;
+      const v = raw === "x" ? "x" : raw === "?" ? "?" : Number(raw);
+      b.setAttribute("aria-pressed", state.answers[i] === v);
+    });
+  });
+
+  subUI.forEach((ui, i) => {
+    if (!ui) return;
+    const show = VISIBLE_ANSWERS.has(state.answers[i]);
+    ui.wrap.hidden = !show;
+    if (show) {
+      const sel = state.subs[i];
+      for (const id in ui.buttons) {
+        ui.buttons[id].setAttribute("aria-pressed", sel.includes(id) ? "true" : "false");
+      }
+    }
+  });
+
+  const n = state.answers.filter(a => a !== null).length;
+  $("progress").textContent = `${n} / ${CATEGORIES.length} yanıtlandı`;
+
+  drawPreview();
+  updateValidationStatus();
+  requestAnimationFrame(alignQGlyphs);
+}
+
+/* ===== Kaydetme / dışa aktarma ===== */
+function fileBase() {
+  const slug = state.name.trim().toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return (slug ? slug + "-" : "") + "arzu-kavanozu";
+}
+
+function triggerDownload(url, name) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function canvasToBlob(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(b => b ? resolve(b) : reject(new Error("PNG oluşturulamadı")), "image/png");
+  });
+}
+
+function canvasToJpegBytes(canvas, quality) {
+  const dataUrl = canvas.toDataURL("image/jpeg", quality);
+  const b64 = dataUrl.split(",")[1];
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+function thumbCanvas(cv, maxW) {
+  const s = Math.min(1, maxW / cv.width);
+  const t = document.createElement("canvas");
+  t.width = Math.max(1, Math.round(cv.width * s));
+  t.height = Math.max(1, Math.round(cv.height * s));
+  t.getContext("2d").drawImage(cv, 0, 0, t.width, t.height);
+  return t;
+}
+
+/* ---- Bağımlılıksız çok sayfalı PDF oluşturucu ---- */
+function buildPDF(pages) {
+  const enc = new TextEncoder();
+  const parts = [];
+  let length = 0;
+
+  const push = (data) => {
+    const bytes = typeof data === "string" ? enc.encode(data) : data;
+    parts.push(bytes);
+    length += bytes.length;
+  };
+
+  const offsets = [];
+
+  push(new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x34, 0x0A,
+                       0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A]));
+
+  const n = pages.length;
+  const kids = [];
+  for (let i = 0; i < n; i++) kids.push(`${3 + i * 3} 0 R`);
+
+  offsets[1] = length;
+  push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+
+  offsets[2] = length;
+  push(`2 0 obj\n<< /Type /Pages /Count ${n} /Kids [${kids.join(" ")}] >>\nendobj\n`);
+
+  for (let i = 0; i < n; i++) {
+    const p = pages[i];
+    const pageNum = 3 + i * 3;
+    const contentNum = pageNum + 1;
+    const imgNum = pageNum + 2;
+
+    const W = (p.logicalWidth * 0.75).toFixed(2);
+    const H = (p.logicalHeight * 0.75).toFixed(2);
+
+    offsets[pageNum] = length;
+    push(`${pageNum} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] `
+      + `/Resources << /XObject << /Im0 ${imgNum} 0 R >> >> /Contents ${contentNum} 0 R >>\nendobj\n`);
+
+    const content = enc.encode(`q\n${W} 0 0 ${H} 0 0 cm\n/Im0 Do\nQ\n`);
+    offsets[contentNum] = length;
+    push(`${contentNum} 0 obj\n<< /Length ${content.length} >>\nstream\n`);
+    push(content);
+    push("\nendstream\nendobj\n");
+
+    offsets[imgNum] = length;
+    push(`${imgNum} 0 obj\n<< /Type /XObject /Subtype /Image `
+      + `/Width ${p.width} /Height ${p.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 `
+      + `/Filter /DCTDecode /Length ${p.jpeg.length} >>\nstream\n`);
+    push(p.jpeg);
+    push("\nendstream\nendobj\n");
+  }
+
+  const totalObjs = 2 + n * 3;
+  const xrefOffset = length;
+
+  let xref = `xref\n0 ${totalObjs + 1}\n0000000000 65535 f \n`;
+  for (let i = 1; i <= totalObjs; i++) {
+    xref += String(offsets[i] || 0).padStart(10, "0") + " 00000 n \n";
+  }
+  xref += `trailer\n<< /Size ${totalObjs + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+  push(xref);
+
+  const out = new Uint8Array(length);
+  let off = 0;
+  for (const part of parts) {
+    out.set(part, off);
+    off += part.length;
+  }
+  return out;
+}
+
+function showSingleModal(url) {
+  const body = $("modalBody");
+  body.innerHTML = "";
+
+  const p = document.createElement("p");
+  p.textContent = "İndirme başlamadıysa resme basılı tutup (veya sağ tıklayıp) “Resmi kaydet” seçeneğini kullanabilirsin.";
+
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "Doldurulmuş kavanozların";
+
+  body.append(p, img);
+  $("modal").hidden = false;
+  $("closeModal").focus();
+}
+
+async function openMultiModal(layout) {
+  const count = layout.pages.length;
+  const canvases = layout.pages.map((p, i) => renderPage(p, i, count, 2));
+
+  const body = $("modalBody");
+  body.innerHTML = "";
+
+  const intro = document.createElement("p");
+  intro.textContent = `Poster ${count} sayfaya bölündü. Sayfaları tek tek PNG olarak indirebilir veya tek bir PDF dosyasında birleştirebilirsin.`;
+  body.appendChild(intro);
+
+  const actions = document.createElement("div");
+  actions.className = "modal-actions";
+
+  const pdfBtn = document.createElement("button");
+  pdfBtn.type = "button";
+  pdfBtn.className = "big";
+  pdfBtn.textContent = "PDF olarak indir";
+  pdfBtn.onclick = () => downloadPDF(layout, canvases);
+
+  const allBtn = document.createElement("button");
+  allBtn.type = "button";
+  allBtn.className = "ghost";
+  allBtn.textContent = "Tüm sayfaları PNG indir";
+  allBtn.onclick = () => downloadAllPages(canvases);
+
+  actions.append(pdfBtn, allBtn);
+  body.appendChild(actions);
+
+  const list = document.createElement("div");
+  list.className = "page-list";
+
+  canvases.forEach((cv, i) => {
+    const item = document.createElement("div");
+    item.className = "page-item";
+
+    const thumb = thumbCanvas(cv, 120);
+    const img = document.createElement("img");
+    img.src = thumb.toDataURL("image/jpeg", 0.7);
+    img.alt = `Sayfa ${i + 1} önizleme`;
+
+    const meta = document.createElement("div");
+    meta.className = "page-meta";
+    meta.textContent = `Sayfa ${i + 1} / ${count}`;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "ghost";
+    btn.textContent = "PNG";
+    btn.onclick = () => downloadPage(cv, i);
+
+    item.append(img, meta, btn);
+    list.appendChild(item);
+  });
+
+  body.appendChild(list);
+
+  $("modal").hidden = false;
+  $("closeModal").focus();
+}
+
+async function downloadPage(cv, index) {
+  const blob = await canvasToBlob(cv);
+  const url = URL.createObjectURL(blob);
+  triggerDownload(url, `${fileBase()}-sayfa-${index + 1}.png`);
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
+}
+
+async function downloadAllPages(canvases) {
+  for (let i = 0; i < canvases.length; i++) {
+    await downloadPage(canvases[i], i);
+    await new Promise(r => setTimeout(r, 450));
+  }
+  toast("Sayfalar indiriliyor. Tarayıcı birden fazla indirmeyi engellerse sayfaları tek tek indir.");
+}
+
+async function downloadPDF(layout, canvases) {
+  try {
+    const pages = canvases.map((cv, i) => ({
+      width: cv.width,
+      height: cv.height,
+      logicalWidth: PW,
+      logicalHeight: layout.pages[i].height,
+      jpeg: canvasToJpegBytes(cv, 0.9)
+    }));
+
+    const bytes = buildPDF(pages);
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, `${fileBase()}.pdf`);
+    setTimeout(() => URL.revokeObjectURL(url), 15000);
+  } catch (e) {
+    console.error(e);
+    toast("PDF oluşturulamadı. Lütfen tekrar deneyin.");
+  }
+}
+
+async function save() {
+  const missing = missingIndexes();
+  if (missing.length) {
+    toast(`${missing.length} soru eksik. İlk eksik soruya gidiliyor.`);
+    setStatus(`${missing.length} soru eksik. Lütfen tüm soruları yanıtlayın.`, true);
+    qEls.forEach(q => q.classList.remove("missing"));
+    const first = qEls[missing[0]];
+    first.classList.add("missing");
+    first.scrollIntoView({ behavior: "smooth", block: "center" });
+    const firstBtn = first.querySelector(".scale button");
+    if (firstBtn) setTimeout(() => firstBtn.focus({ preventScroll: true }), 350);
+    return;
+  }
+
+  setStatus("", false);
+
+  try {
+    const layout = buildLayout();
+
+    if (layout.pages.length > 1) {
+      await openMultiModal(layout);
+      return;
+    }
+
+    const canvas = renderPage(layout.pages[0], 0, 1, 2);
+    const blob = await canvasToBlob(canvas);
+    const fname = fileBase() + ".png";
+    const file = new File([blob], fname, { type: "image/png" });
+    const touch = matchMedia("(pointer: coarse)").matches;
+
+    if (touch && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file] });
+        return;
+      } catch (e) {
+        if (e.name === "AbortError") return;
+      }
+    }
+
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, fname);
+    showSingleModal(url);
+  } catch (e) {
+    console.error(e);
+    toast("Görsel oluşturulamadı. Lütfen tekrar deneyin.");
+  }
+}
+
+$("save").onclick = save;
+$("saveBar").onclick = save;
+$("closeModal").onclick = () => { $("modal").hidden = true; };
+$("modal").addEventListener("click", e => {
+  if (e.target.id === "modal") $("modal").hidden = true;
+});
+
+$("reset").onclick = () => {
+  if (!confirm("Tüm kavanozları boşaltıp baştan başlamak istiyor musunuz?")) return;
+  state.answers = CATEGORIES.map(() => null);
+  state.subs = emptySubs();
+  state.name = "";
+  $("name").value = "";
+  persist();
+  setStatus("", false);
+  qEls.forEach(q => q.classList.remove("missing"));
+  update();
+  scrollTo({ top: 0, behavior: "smooth" });
+};
+
+let _resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    _qGlyphOffsetCache = null;
+    alignQGlyphs();
+  }, 150);
+});
+
+render();
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    _qGlyphOffsetCache = null;
+    render();
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>
