@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arzu Kavanozu</title>
-<meta name="description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, resmini kaydet.">
-<meta property="og:title" content="Arzu Kavanozu">
-<meta property="og:description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, resmini kaydet.">
+<title>Arzu Kavanozu — Arketip</title>
+<meta name="description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, arketipini gör, resmini kaydet.">
+<meta property="og:title" content="Arzu Kavanozu — Arketip">
+<meta property="og:description" content="Arzu Kavanozu — kavanozlarını doldur, rengini seç, arketipini gör, resmini kaydet.">
 <meta name="robots" content="noindex">
 <style>
   :root{--c:#e63946;--on-c:#fff;--ink:#1d1a17;--bg:#fbf6ef;--card:#fff;--muted:#6b625a;--line:#e9e0d5;--x:#d62828;--q:#1d4ed8}
@@ -23,7 +23,6 @@
   .legend li{display:flex;gap:6px;align-items:center}
   .legend strong{font-weight:400;color:var(--ink);font-size:22px;line-height:1;min-width:26px;text-align:center;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","EmojiOne Color","Android Emoji","Segoe UI Symbol",sans-serif}
 
-  /* Header top: h1 + sosyal medya bağlantıları */
   .header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px 20px;flex-wrap:wrap}
   .social{display:flex;gap:10px;flex-wrap:wrap}
   .social a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:2px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;min-height:44px;line-height:1;transition:background .15s,border-color .15s,transform .08s;white-space:nowrap}
@@ -44,6 +43,8 @@
   .step{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   h2{font-family:"Arial Narrow",Impact,"Franklin Gothic Medium",sans-serif;font-weight:600;font-size:27px;margin:2px 0 12px;line-height:1.15}
   .hint{color:var(--muted);font-size:16px;margin:-4px 0 14px}
+  .profile-line{font-weight:700;font-size:16px;color:var(--ink);margin:12px 0 0;line-height:1.35}
+  .profile-line[hidden]{display:none}
   input[type=text]{font:inherit;font-size:20px;width:100%;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
   input[type=text]:focus{border-color:var(--ink);outline:none}
   button{font:inherit;cursor:pointer;color:var(--ink)}
@@ -102,7 +103,6 @@
   .status{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#fff2f0;border:2px solid #f4b4ab;color:#8a1c12;font-weight:700;font-size:15px;line-height:1.35}
   .status[hidden]{display:none}
 
-  /* Site atfı — yalnızca web sayfasında, PNG'ye dahil değil */
   .site-footer{margin-top:36px;padding-top:20px;border-top:2px solid var(--line);text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
   .site-footer p{margin:2px 0}
   .site-footer a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
@@ -211,6 +211,7 @@
         <h2>Kavanozların</h2>
         <canvas class="poster" id="poster" aria-label="Doldurulmuş kavanozlarının önizlemesi"></canvas>
         <p class="hint" id="tierNote" hidden></p>
+        <p class="profile-line" id="profileLine" hidden></p>
         <p class="status" id="status" role="alert" hidden></p>
         <button class="big" id="save" type="button">Kavanozlarımı kaydet</button>
         <div class="small-links">
@@ -441,6 +442,392 @@ const SUBCATS = [
   ]
 ];
 
+/* ===== ARKETİP MOTORU — veri + hesaplama ===== */
+const IDX = {
+  DOM: 0, SUB: 1, SWITCH: 2, CHOKE: 3, CHOKED: 4, SPANK: 5, SPANKED: 6,
+  DDLG: 7, AGE: 8, PUBLIC: 9, WAX: 10, URINE: 11, ROLE: 12, CNC: 13,
+  ORG_SUB: 14, ORG_DOM: 15, GAG: 16, FEET: 17, ANAL: 18, BOUND: 19, BIND: 20,
+  HUMIL: 21, HUMILD: 22, BDSM: 23, TRIO: 24, SADISM: 25, MASO: 26, SPIT: 27
+};
+const N_CATS = 28;
+
+const ARCHETYPES = [
+  { id: "hedonist", name: "Geniş Spektrumlu Hedonist", kind: "posture" },
+  { id: "kasif", name: "Meraklı Kaşif", kind: "posture" },
+  { id: "minimalist", name: "Sınırları Net Minimalist", kind: "posture" },
+  { id: "switch", name: "Bukalemun Switch", kind: "role", fam: null,
+    tags: ["2:esit", "2:duruma-gore"] },
+  { id: "primal", name: "Primal Hâkim", kind: "role", fam: "fiziksel",
+    w: { [IDX.CHOKE]: 3, [IDX.SPANK]: 3, [IDX.SADISM]: 3, [IDX.DOM]: 2, [IDX.SPIT]: 1, [IDX.HUMIL]: 1 },
+    tags: ["5:yuksek", "5:orta", "5:elle", "25:fiziksel", "27:uzerine", "27:agiza"] },
+  { id: "kontrol", name: "Kontrol Mimarı", kind: "role", fam: "psikolojik",
+    w: { [IDX.DOM]: 3, [IDX.ORG_DOM]: 3, [IDX.BIND]: 3, [IDX.BDSM]: 2, [IDX.HUMIL]: 2, [IDX.GAG]: 1, [IDX.ROLE]: 1 },
+    tags: ["0:kurallar", "0:talimat", "0:kontrol", "0:teslimiyet", "15:zamanlama", "15:izin", "15:kurallar"] },
+  { id: "mazosist", name: "Yoğunluk Arayan Mazoşist", kind: "role", fam: "fiziksel",
+    w: { [IDX.MASO]: 3, [IDX.SPANKED]: 3, [IDX.CHOKED]: 3, [IDX.HUMILD]: 2, [IDX.BDSM]: 2, [IDX.BOUND]: 1 },
+    tags: ["6:yuksek", "6:orta", "6:arac", "26:fiziksel", "27:uzerine-tercih"] },
+  { id: "itaatkar", name: "Adanmış İtaatkâr", kind: "role", fam: "ibadet",
+    w: { [IDX.SUB]: 3, [IDX.ORG_SUB]: 3, [IDX.BOUND]: 3, [IDX.HUMILD]: 2, [IDX.DDLG]: 2, [IDX.GAG]: 1 },
+    tags: ["1:hizmet", "1:takip", "1:uyma", "1:birakma", "14:izin-bekleme", "26:kontrol"] },
+  { id: "sahne", name: "Sahne ve Kurgu Ustası", kind: "theme", fam: "kurgu",
+    w: { [IDX.ROLE]: 3, [IDX.CNC]: 3, [IDX.AGE]: 3, [IDX.DDLG]: 2, [IDX.PUBLIC]: 1 },
+    tags: ["12:*", "13:*", "8:donem", "8:yas-farki"] },
+  { id: "estet", name: "Duyusal ve Dokunsal Estet", kind: "theme", fam: "duyusal",
+    w: { [IDX.WAX]: 3, [IDX.FEET]: 3, [IDX.GAG]: 2, [IDX.BOUND]: 1, [IDX.BIND]: 1 },
+    tags: ["10:duyusal", "10:gorsel", "17:gorsel", "17:masaj", "17:opme", "19:estetik", "20:estetik"] },
+  { id: "kamusal", name: "Kamusal Heyecan Avcısı", kind: "theme", fam: "kamusal",
+    damp: 0.9, w: { [IDX.PUBLIC]: 3, [IDX.ROLE]: 1 },
+    tags: ["9:*", "11:izlenme"] },
+  { id: "ritual", name: "Ritüel ve Protokol Uzmanı", kind: "theme", fam: "ritual",
+    w: { [IDX.BDSM]: 3, oc: 3, [IDX.DDLG]: 3, [IDX.GAG]: 2, [IDX.BOUND]: 1, [IDX.BIND]: 1 },
+    tags: ["0:kurallar", "1:uyma", "7:kurallar", "13:kurallar", "14:kurallar", "15:kurallar"] },
+  { id: "gozlem", name: "Gözlem ve Paylaşım Meraklısı", kind: "theme", fam: null,
+    damp: 0.9, w: { [IDX.TRIO]: 3, [IDX.PUBLIC]: 1 },
+    tags: ["9:gizlilik", "9:atmosfer", "11:izleme", "11:izlenme", "11:karsilikli", "24:*"] },
+  { id: "gurme", name: "Seçici Gurme", kind: "posture" }
+];
+const ARCH = Object.fromEntries(ARCHETYPES.map((a, i) => [a.id, { ...a, order: i }]));
+
+const MODALITIES = [
+  { id: "psikolojik", name: "Psikolojik ve Otorite Odaklı",
+    w: { [IDX.HUMIL]: 3, [IDX.HUMILD]: 3, [IDX.ORG_DOM]: 2, [IDX.ORG_SUB]: 2, [IDX.DOM]: 2, [IDX.SUB]: 1, [IDX.CNC]: 1 },
+    tags: ["0:kontrol", "0:teslimiyet", "21:otorite", "22:otorite", "21:sozel", "22:sozel", "21:utandirma", "22:utandirilma", "25:psikolojik", "26:psikolojik"] },
+  { id: "fiziksel", name: "Fiziksel ve Yüksek Yoğunluklu",
+    w: { [IDX.SPANK]: 3, [IDX.SPANKED]: 3, [IDX.SADISM]: 3, [IDX.MASO]: 3, [IDX.CHOKE]: 2, [IDX.CHOKED]: 2, [IDX.BDSM]: 1, [IDX.WAX]: 1 },
+    tags: ["25:fiziksel", "26:fiziksel", "5:yuksek", "6:yuksek", "5:arac", "6:arac"] },
+  { id: "ritual", name: "Ritüel ve Kural Odaklı",
+    w: { [IDX.BDSM]: 3, oc: 3, [IDX.DDLG]: 2, [IDX.GAG]: 1, [IDX.DOM]: 1, [IDX.SUB]: 1 },
+    tags: ["0:kurallar", "1:uyma", "1:takip", "0:talimat", "7:kurallar", "13:kurallar", "14:kurallar", "15:kurallar"] },
+  { id: "kurgu", name: "Senaryo ve Kurgu Odaklı",
+    w: { [IDX.ROLE]: 3, [IDX.CNC]: 3, [IDX.AGE]: 2, [IDX.DDLG]: 1, [IDX.PUBLIC]: 1 },
+    tags: ["12:*", "13:*", "8:donem", "8:yas-farki"] },
+  { id: "duyusal", name: "Duyusal ve Estetik Odaklı",
+    w: { [IDX.WAX]: 3, [IDX.FEET]: 3, [IDX.BOUND]: 1, [IDX.BIND]: 1, [IDX.GAG]: 1, [IDX.ANAL]: 1 },
+    tags: ["10:duyusal", "10:gorsel", "17:gorsel", "19:estetik", "20:estetik", "17:masaj", "17:opme"] },
+  { id: "tabu", name: "Tabu ve Risk Odaklı",
+    w: { [IDX.SPIT]: 3, [IDX.URINE]: 3, [IDX.CHOKE]: 2, [IDX.CHOKED]: 2, [IDX.PUBLIC]: 2, [IDX.CNC]: 2, [IDX.ANAL]: 1 },
+    tags: ["27:*", "11:temas", "9:acik-alan"] },
+  { id: "kamusal", name: "Kamusal ve Görünürlük Odaklı",
+    w: { [IDX.PUBLIC]: 3, [IDX.TRIO]: 1, [IDX.URINE]: 1 },
+    tags: ["9:*", "11:izlenme", "11:izleme"] },
+  { id: "ibadet", name: "İbadet ve Tapınma Odaklı",
+    w: { [IDX.SUB]: 3, [IDX.HUMILD]: 2, [IDX.BOUND]: 2, [IDX.FEET]: 2, [IDX.ORG_SUB]: 2, [IDX.GAG]: 1 },
+    tags: ["1:hizmet", "1:birakma", "17:opme", "17:masaj", "22:otorite"] },
+  { id: "sefkat", name: "Duygusal ve Şefkat Odaklı",
+    w: { [IDX.DDLG]: 3, [IDX.AGE]: 2, [IDX.SWITCH]: 1, [IDX.ROLE]: 1 },
+    tags: ["7:sefkat", "7:bakim-veren", "7:bakim-alan", "8:genc", "8:olgun"] },
+  { id: "kisitlama", name: "Kısıtlama ve Hapsolma Odaklı",
+    w: { [IDX.BOUND]: 3, [IDX.BIND]: 3, [IDX.GAG]: 2, [IDX.BDSM]: 2, [IDX.CNC]: 1 },
+    tags: ["19:hareket", "20:hareket", "19:eller", "20:eller", "19:ayaklar", "20:ayaklar", "16:takma", "16:taktirma"] }
+];
+
+const DS_PAIRS = [
+  [IDX.DOM, IDX.SUB, 3],
+  [IDX.CHOKE, IDX.CHOKED, 1.5],
+  [IDX.ORG_DOM, IDX.ORG_SUB, 1.5],
+  [IDX.SPANK, IDX.SPANKED, 1],
+  [IDX.BIND, IDX.BOUND, 1],
+  [IDX.HUMIL, IDX.HUMILD, 1],
+  [IDX.SADISM, IDX.MASO, 1]
+];
+
+const DS_TAG_NUDGE = {
+  "7:bakim-veren": ["D", 0.2], "7:bakim-alan": ["S", 0.2],
+  "8:olgun": ["D", 0.2], "8:genc": ["S", 0.2]
+};
+
+const CFG = {
+  Q_SIGNAL: 0.25,
+  MIN_CORE_ROLE: 0.6,
+  MIN_CORE_MODALITY: 0.4,
+  MAIN_THRESHOLD: 0.35,
+  MODALITY_THRESHOLD: 0.35,
+  TAG_BONUS: 0.05, TAG_BONUS_MAX: 0.15,
+  STRONG: 0.85,
+  ROLE_BEATS_POSTURE: 0.6,
+  COVERAGE_MIN: 0.6,
+  SECONDARY_GAP: 0.10,
+  DS_UNDEFINED_BELOW: 1.0,
+  DS_LEAN: 0.2,
+  SWITCH_RATIO: 0.7, SWITCH_MIN_SIDE: 5,
+  MODALITY_FLAT_SPREAD: 0.15
+};
+
+const clamp01 = x => Math.max(0, Math.min(1, x));
+
+function signal(a) {
+  if (typeof a === "number") return a / 5;
+  if (a === "?") return CFG.Q_SIGNAL;
+  return 0;
+}
+
+function tagSet(subs) {
+  const set = new Set();
+  (subs || []).forEach((ids, i) => {
+    (ids || []).forEach(id => {
+      set.add(i + ":" + id);
+      set.add(i + ":*");
+    });
+  });
+  return set;
+}
+
+function tagBonus(tags, set) {
+  if (!tags) return 0;
+  let n = 0;
+  for (const t of tags) if (set.has(t)) n++;
+  return Math.min(CFG.TAG_BONUS_MAX, n * CFG.TAG_BONUS);
+}
+
+function sigOf(S, k) {
+  return k === "oc" ? Math.max(S[IDX.ORG_SUB], S[IDX.ORG_DOM]) : S[+k];
+}
+
+function weightedScore(spec, S, set, minCore) {
+  let sw = 0, sum = 0, core = 0;
+  for (const k of Object.keys(spec.w)) {
+    const w = spec.w[k], v = sigOf(S, k);
+    sw += w;
+    sum += w * v;
+    if (w === 3) core = Math.max(core, v);
+  }
+  if (core < minCore) return 0;
+  return clamp01((0.6 * sum / sw + 0.4 * core + tagBonus(spec.tags, set)) * (spec.damp || 1));
+}
+
+function computeStats(answers) {
+  const S = answers.map(signal);
+  const answered = answers.filter(a => a !== null).length;
+  const N = answered || 1;
+  const stats = {
+    answered,
+    avg: S.reduce((p, c) => p + c, 0) / N,
+    breadth: answers.filter(a => typeof a === "number" && a >= 3).length / N,
+    peaks5: answers.filter(a => a === 5).length,
+    peaks4: answers.filter(a => typeof a === "number" && a >= 4).length,
+    xCount: answers.filter(a => a === "x").length,
+    qCount: answers.filter(a => a === "?").length,
+    zeroCount: answers.filter(a => a === 0).length
+  };
+  stats.xRate = stats.xCount / N;
+  stats.qRate = stats.qCount / N;
+  stats.zeroRate = stats.zeroCount / N;
+  const top5 = [...S].sort((a, b) => b - a).slice(0, 5);
+  stats.selectivity = top5.reduce((p, c) => p + c, 0) / 5 - stats.avg;
+  const nonPeak = answers.filter(a => a !== null && !(typeof a === "number" && a >= 4));
+  const rest0x = nonPeak.filter(a => a === 0 || a === "x").length;
+  stats.restRate = nonPeak.length ? rest0x / nonPeak.length : 0;
+  stats.S = S;
+  return stats;
+}
+
+function computeDS(S, set) {
+  let D = 0, Sb = 0;
+  for (const [d, s, w] of DS_PAIRS) {
+    D += w * S[d];
+    Sb += w * S[s];
+  }
+  for (const key in DS_TAG_NUDGE) {
+    if (set.has(key)) {
+      const [side, amt] = DS_TAG_NUDGE[key];
+      if (side === "D") D += amt;
+      else Sb += amt;
+    }
+  }
+  const total = D + Sb;
+  const undefinedAxis = total < CFG.DS_UNDEFINED_BELOW;
+  const balance = undefinedAxis ? 0 : (D - Sb) / total;
+  const hi = Math.max(D, Sb), lo = Math.min(D, Sb);
+  const ratio = hi > 0 ? lo / hi : 0;
+  let label;
+  if (undefinedAxis) label = "belirsiz";
+  else if ((ratio >= CFG.SWITCH_RATIO && lo >= CFG.SWITCH_MIN_SIDE) ||
+           (S[IDX.SWITCH] >= 0.8 && ratio >= 0.5)) label = "switch";
+  else if (balance > CFG.DS_LEAN) label = "dominant";
+  else if (balance < -CFG.DS_LEAN) label = "submissive";
+  else label = "dengeli";
+  const domPct = Math.round(50 + 50 * balance);
+  return {
+    D, S: Sb, total, balance, ratio, undefinedAxis, label,
+    pos: 50 + 50 * balance, domPct, subPct: 100 - domPct
+  };
+}
+
+function postureScores(st) {
+  const hedonist = clamp01(st.breadth / 0.8)
+    * (st.xCount <= 1 ? 1 : Math.max(0, 1 - (st.xCount - 1) * 0.25))
+    * clamp01(st.avg / 0.55);
+  const kasif = clamp01(st.qRate / 0.35);
+  const minimalist = clamp01((st.xRate + st.zeroRate) / 0.6)
+    * (st.peaks4 <= 3 ? 1 : Math.max(0, 1 - (st.peaks4 - 3) * 0.25));
+  const peakFit = (st.peaks4 >= 4 && st.peaks4 <= 8) ? 1
+    : (st.peaks4 === 3 || st.peaks4 === 9 || st.peaks4 === 10) ? 0.5 : 0;
+  const gurme = peakFit * clamp01(st.restRate / 0.7) * clamp01(st.selectivity / 0.45);
+  return { hedonist, kasif, minimalist, gurme };
+}
+
+function roleScores(S, ds, set) {
+  const out = {};
+  for (const a of ARCHETYPES) {
+    if (a.kind === "posture") continue;
+    let sc;
+    if (a.id === "switch") {
+      const minSide = Math.min(S[IDX.DOM], S[IDX.SUB]);
+      const gate = minSide >= 0.6 || (S[IDX.SWITCH] >= 0.8 && minSide >= 0.2);
+      if (!gate) sc = 0;
+      else {
+        const rf = ds.undefinedAxis ? 0 : ds.ratio * Math.min(1, Math.max(ds.D, ds.S) / 3);
+        sc = clamp01(0.4 * S[IDX.SWITCH] + 0.35 * rf + 0.25 * minSide + tagBonus(a.tags, set));
+      }
+    } else if (a.id === "gozlem") {
+      const t = S[IDX.TRIO];
+      const hasWatchTag = set.has("11:izleme") || set.has("11:izlenme") || set.has("9:gizlilik");
+      const triggered = t >= 0.8 || (t >= 0.6 && hasWatchTag);
+      sc = triggered ? weightedScore(a, S, set, CFG.MIN_CORE_ROLE) : 0;
+    } else {
+      sc = weightedScore(a, S, set, CFG.MIN_CORE_ROLE);
+    }
+    out[a.id] = sc;
+  }
+  return out;
+}
+
+function coverage(id, answers) {
+  const peaks = [];
+  answers.forEach((a, i) => {
+    if (typeof a === "number" && a >= 4) peaks.push(i);
+  });
+  if (!peaks.length) return 1;
+  const spec = ARCH[id];
+  const keys = id === "switch"
+    ? [IDX.DOM, IDX.SUB, IDX.SWITCH]
+    : Object.keys(spec.w).flatMap(k =>
+        k === "oc" ? [IDX.ORG_SUB, IDX.ORG_DOM] : [+k]);
+  const set = new Set(keys);
+  return peaks.filter(i => set.has(i)).length / peaks.length;
+}
+
+function pickMain(st, ds, set, answers) {
+  const post = postureScores(st);
+  const roles = roleScores(st.S, ds, set);
+  const ranked = Object.entries(roles)
+    .map(([id, score]) => ({ id, score, order: ARCH[id].order }))
+    .sort((a, b) => b.score - a.score || a.order - b.order);
+  const bestRole = ranked[0];
+  const isStrong = k => post[k] >= CFG.STRONG;
+  const mk = (id, score, extra) => ({ id, name: ARCH[id].name, score, ...extra });
+
+  let main, secondary = null;
+
+  if (isStrong("hedonist")) {
+    main = mk("hedonist", post.hedonist);
+  } else if (isStrong("kasif")) {
+    main = mk("kasif", post.kasif);
+    if (bestRole.score >= CFG.ROLE_BEATS_POSTURE)
+      secondary = mk(bestRole.id, bestRole.score);
+  } else if ((isStrong("minimalist") || isStrong("gurme"))
+      && (bestRole.score < CFG.ROLE_BEATS_POSTURE ||
+          coverage(bestRole.id, answers) < CFG.COVERAGE_MIN)) {
+    const k = post.minimalist >= post.gurme ? "minimalist" : "gurme";
+    main = mk(k, post[k]);
+    if (bestRole.score >= CFG.MAIN_THRESHOLD)
+      secondary = mk(bestRole.id, bestRole.score);
+  } else if (bestRole.score >= CFG.MAIN_THRESHOLD) {
+    main = mk(bestRole.id, bestRole.score);
+    const strongPost = ["minimalist", "gurme"]
+      .filter(isStrong)
+      .sort((a, b) => post[b] - post[a])[0];
+    const second = ranked[1];
+    if (strongPost) secondary = mk(strongPost, post[strongPost]);
+    else if (second && second.score >= CFG.MAIN_THRESHOLD &&
+      (bestRole.score - second.score) / bestRole.score < CFG.SECONDARY_GAP)
+      secondary = mk(second.id, second.score);
+  } else {
+    const best = Object.entries(post).sort((a, b) => b[1] - a[1])[0];
+    if (best[1] >= 0.25) main = mk(best[0], best[1], { weak: true });
+    else main = mk("kasif", best[1], { weak: true, fallback: true });
+  }
+  return { main, secondary, post, roles };
+}
+
+function pickModalities(S, set, mainId) {
+  const skip = ARCH[mainId] && ARCH[mainId].fam;
+  const raw = MODALITIES
+    .filter(m => m.id !== skip)
+    .map((m, i) => ({
+      id: m.id, name: m.name,
+      score: weightedScore(m, S, set, CFG.MIN_CORE_MODALITY), order: i
+    }));
+  const flat = Math.max(...raw.map(m => m.score))
+    - Math.min(...raw.map(m => m.score)) < CFG.MODALITY_FLAT_SPREAD;
+  if (flat) return { shown: [], all: [], flat: true };
+  const list = raw
+    .filter(m => m.score >= CFG.MODALITY_THRESHOLD)
+    .sort((a, b) => b.score - a.score || a.order - b.order);
+  const out = list.slice(0, 2);
+  if (list[2] && list[2].score >= 0.9 * list[1].score) out.push(list[2]);
+  return { shown: out.map(({ id, name, score }) => ({ id, name, score })), all: list };
+}
+
+function CATS_SAFE(a) {
+  const out = [];
+  for (let i = 0; i < N_CATS; i++)
+    out.push(Array.isArray(a) && a[i] !== undefined ? a[i] : null);
+  return out;
+}
+
+function computeProfile(state) {
+  const answers = CATS_SAFE(state.answers);
+  const set = tagSet(state.subs);
+  const st = computeStats(answers);
+  const ds = computeDS(st.S, set);
+  const { main, secondary, post, roles } = pickMain(st, ds, set, answers);
+  const mod = pickModalities(st.S, set, main.id);
+  return {
+    main, secondary, modalities: mod.shown, ds,
+    stats: { ...st, S: undefined },
+    debug: { posture: post, roles, modalitiesAll: mod.all }
+  };
+}
+
+/* ===== PROFİL ÖZETİ ===== */
+const SUMMARY_TEXTS = {
+  hedonist: "Geniş Spektrumlu Hedonist eğilimin, farklı pratiklere açık ve yüksek ilgili bir profil çiziyor; keşif alanın oldukça geniş görünüyor.",
+  kasif: "Meraklı Kaşif eğilimin, henüz netleşmemiş alanlara ilgi duyduğunu ve soru işaretlerini keşif aracı olarak kullandığını gösteriyor.",
+  minimalist: "Sınırları Net Minimalist eğilimin, az sayıda belirgin ilgi ve çok sayıda net sınır üzerinden seçiciliğini gösterdiğini yansıtıyor.",
+  switch: "Bukalemun Switch eğilimin, role ve duruma göre konum değiştirmeye açık olduğunu gösteriyor.",
+  primal: "Primal Hâkim eğilimin, yönlendiren rol olarak boğaz sıkma, şaplak atma ve sadizm gibi yoğun fiziksel pratiklere yakın durduğunu gösteriyor.",
+  kontrol: "Kontrol Mimarı eğilimin, aktif yönlendirme ve süreç mimarisi üzerinden güç kurmaya ilgi duyduğunu gösteriyor; düzen senin için fiziksel yoğunluktan önce geliyor.",
+  mazosist: "Yoğunluk Arayan Mazoşist eğilimin, yoğunluğa maruz kalan rol olarak şaplak yeme, boğazının sıkılması ve mazoşizm gibi fiziksel duyumlara açık olduğunu gösteriyor.",
+  itaatkar: "Adanmış İtaatkâr eğilimin, kontrolü devretme ve hizmet odaklı dinamiklere yakın durduğunu gösteriyor.",
+  sahne: "Sahne ve Kurgu Ustası eğilimin, senaryo, hikâye ve rol canlandırma çerçevelerinde deneyimlemeye ilgi duyduğunu gösteriyor.",
+  estet: "Duyusal ve Dokunsal Estet eğilimin, dokunma, görsellik ve duyusal ayrıntılara önem verdiğini gösteriyor.",
+  kamusal: "Kamusal Heyecan Avcısı eğilimin, kamusal görünürlük ve göz önünde olma temasının ilgini çektiğini gösteriyor.",
+  ritual: "Ritüel ve Protokol Uzmanı eğilimin, yön-bağımsız kurallar, rutinler ve önceden belirlenmiş protokol çerçevelerine yakın durduğunu gösteriyor.",
+  gozlem: "Gözlem ve Paylaşım Meraklısı eğilimin, izleme, izlenme ve paylaşımlı deneyimlere ilgi duyduğunu gösteriyor.",
+  gurme: "Seçici Gurme eğilimin, belirli ilgi alanlarında yoğunlaşırken diğer alanlarda seçici kaldığını gösteriyor.",
+  karma: "Yanıtların tek bir arketipte toplanmıyor; geniş ve dengeli bir dağılım var."
+};
+
+function dsSentence(ds) {
+  if (ds.undefinedAxis) return "Rol ekseni şu an belirsiz; dominant ya da submissive yön netleşmiş değil.";
+  if (ds.label === "switch") return "D/S dengesinde switch eğilimi öne çıkıyor; iki yön de benzer ağırlıkta.";
+  if (ds.label === "dominant") return `D/S dengesinde dominant taraf %${ds.domPct} ağırlıkla öne çıkıyor.`;
+  if (ds.label === "submissive") return `D/S dengesinde submissive taraf %${ds.subPct} ağırlıkla öne çıkıyor.`;
+  return "D/S dengesinde dominant ve submissive taraflar birbirine yakın görünüyor.";
+}
+
+function buildSummary(profile) {
+  const key = profile.main.fallback ? "karma" : profile.main.id;
+  const parts = [SUMMARY_TEXTS[key] || SUMMARY_TEXTS.karma];
+  if (profile.modalities && profile.modalities.length) {
+    const names = profile.modalities.map(m => m.name.toLocaleLowerCase("tr-TR")).join(", ");
+    parts.push(`Alt odaklarında ${names} öne çıkıyor.`);
+  }
+  parts.push(dsSentence(profile.ds));
+  return parts.join(" ");
+}
+
 const VISIBLE_ANSWERS = new Set([1, 2, 3, 4, 5, "?"]);
 
 const PW = 1200;
@@ -449,8 +836,11 @@ const COL_W = 150;
 const ROWS = Math.ceil(CATEGORIES.length / COLS);
 
 const POSTER_TOP = 310;
-const FINAL_BOTTOM_PAD = 20;
+const PROFILE_BLOCK_H = 440;
+const FIRST_CONTENT_TOP = POSTER_TOP + PROFILE_BLOCK_H;
+const FINAL_BOTTOM_PAD = 70;
 const FOOTER_H = 120;
+const DISCLAIMER_TEXT = "Eğlence ve keşif amaçlıdır; tanı veya değerlendirme değildir.";
 
 const JAR_H = 170;
 const TITLE_GAP = 40;
@@ -514,6 +904,8 @@ let state = {
   answers: CATEGORIES.map(() => null),
   subs: emptySubs()
 };
+
+const allAnswered = () => state.answers.every(a => a !== null);
 
 function applyLoaded(s) {
   if (!s || typeof s !== "object") return false;
@@ -1100,6 +1492,10 @@ function measureCell(c, catIndex) {
   };
 }
 
+function contentTopForPage(pageIndex) {
+  return pageIndex === 0 ? FIRST_CONTENT_TOP : POSTER_TOP;
+}
+
 function buildLayout() {
   const measure = document.createElement("canvas").getContext("2d");
   const cells = CATEGORIES.map((_, i) => measureCell(measure, i));
@@ -1113,7 +1509,7 @@ function buildLayout() {
     rows.push({ height: rowH, contentHeight: contentH, cells: rowCells });
   }
 
-  let total = POSTER_TOP;
+  let total = FIRST_CONTENT_TOP;
   for (let r = 0; r < rows.length; r++) {
     total += r === rows.length - 1 ? rows[r].contentHeight : rows[r].height;
   }
@@ -1132,7 +1528,7 @@ function buildLayout() {
 
 function paginate(rows) {
   const pages = [];
-  let current = { rows: [], height: POSTER_TOP + FOOTER_H };
+  let current = { rows: [], height: FIRST_CONTENT_TOP + FOOTER_H };
 
   for (const row of rows) {
     if (current.rows.length && current.height + row.height > SINGLE_MAX_H) {
@@ -1158,8 +1554,6 @@ function drawHeader(c, pageIndex, pageCount) {
   c.textBaseline = "alphabetic";
   c.fillStyle = INK;
 
-  /* PNG başlığı: "Arzu Kavanozu". Uzun başlık mevcut alana sığmazsa
-     font boyutu otomatik küçültülür; konum/alt çizgi korunur. */
   const title = "Arzu Kavanozu";
   const lineW = 300;
   const gap = 26;
@@ -1213,6 +1607,200 @@ function drawHeader(c, pageIndex, pageCount) {
   }
 }
 
+function drawProfileChips(c, mods, y, rgb) {
+  const font = "600 20px 'Arial Narrow', Impact, sans-serif";
+  c.font = font;
+  const padX = 18, gap = 12, maxW = PW - 140;
+  const h = 36;
+  const items = mods.map(m => ({ text: m.name, w: c.measureText(m.name).width + padX * 2 }));
+  const lines = [];
+  let line = [], lineW = 0;
+
+  for (const it of items) {
+    const add = (line.length ? gap : 0) + it.w;
+    if (line.length && lineW + add > maxW) {
+      lines.push(line);
+      line = [];
+      lineW = 0;
+    }
+    line.push(it);
+    lineW += (line.length > 1 ? gap : 0) + it.w;
+  }
+  if (line.length) lines.push(line);
+
+  c.textAlign = "center";
+  c.textBaseline = "middle";
+
+  let cy = y;
+  for (const ln of lines) {
+    const totalW = ln.reduce((s, it) => s + it.w, 0) + gap * (ln.length - 1);
+    let x = PW / 2 - totalW / 2;
+    for (const it of ln) {
+      c.beginPath();
+      roundRect(c, x, cy, it.w, h, h / 2);
+      c.fillStyle = css(rgb);
+      c.fill();
+      c.lineWidth = 2.5;
+      c.strokeStyle = INK;
+      c.stroke();
+      c.fillStyle = lum(rgb) > 0.6 ? INK : "#fff";
+      c.fillText(it.text, x + it.w / 2, cy + h / 2 + 1);
+      x += it.w + gap;
+    }
+    cy += h + 10; // Aralık normale döndürüldü
+  }
+
+  return Math.max(0, cy - y - (lines.length ? 10 : 0));
+}
+
+function drawDSBar(c, ds, y) {
+  const w = 900, h = 26, x = (PW - w) / 2;
+  c.save();
+  c.textAlign = "center";
+  c.textBaseline = "alphabetic";
+
+  if (ds.undefinedAxis) {
+    c.beginPath();
+    roundRect(c, x, y, w, h, h / 2);
+    c.fillStyle = "#d9d9d9";
+    c.fill();
+    c.lineWidth = 3;
+    c.strokeStyle = INK;
+    c.stroke();
+    c.fillStyle = "#555";
+    c.font = "600 15px 'Arial Narrow', Impact, sans-serif";
+    c.textBaseline = "middle";
+    c.fillText("rol ekseni belirsiz", PW / 2, y + h / 2 + 1);
+    c.restore();
+    return;
+  }
+
+  c.beginPath();
+  roundRect(c, x, y, w, h, h / 2);
+  c.fillStyle = lighten(hexToRgb(state.color), .65);
+  c.fill();
+
+  c.save();
+  c.beginPath();
+  roundRect(c, x, y, w, h, h / 2);
+  c.clip();
+  c.fillStyle = darken(hexToRgb(state.color), .05);
+  c.fillRect(x, y, w * ds.pos / 100, h);
+  c.restore();
+
+  c.beginPath();
+  roundRect(c, x, y, w, h, h / 2);
+  c.lineWidth = 3;
+  c.strokeStyle = INK;
+  c.stroke();
+
+  const mx = x + w * ds.pos / 100;
+  c.beginPath();
+  c.moveTo(mx, y - 4);
+  c.lineTo(mx, y + h + 4);
+  c.lineWidth = 5;
+  c.strokeStyle = INK;
+  c.stroke();
+
+  c.font = "600 16px 'Arial Narrow', Impact, sans-serif";
+  c.fillStyle = "#555";
+  c.textBaseline = "alphabetic";
+  c.textAlign = "left";
+  c.fillText(`Dominant %${ds.domPct}`, x, y - 10);
+  c.textAlign = "right";
+  c.fillText(`Submissive %${ds.subPct}`, x + w, y - 10);
+
+  if (ds.label === "switch") {
+    c.textAlign = "center";
+    c.fillStyle = "#666";
+    c.font = "600 15px 'Arial Narrow', Impact, sans-serif";
+    c.fillText("Switch eğilimi", PW / 2, y - 25);
+  }
+
+  c.restore();
+}
+
+function drawProfileBlock(c, profile) {
+  const top = POSTER_TOP;
+  c.save();
+  c.textAlign = "center";
+  c.textBaseline = "alphabetic";
+
+  if (!profile) {
+    c.fillStyle = "#999";
+    c.font = "500 24px 'Arial Narrow', Impact, sans-serif";
+    const msg = "Tüm soruları yanıtladığında arketipin burada görünecek";
+    const lines = wrapText(c, msg, PW - 200);
+    const startY = top + 150;
+    lines.forEach((line, i) => c.fillText(line, PW / 2, startY + i * 30));
+    c.restore();
+    return;
+  }
+
+  const rgb = hexToRgb(state.color);
+  const displayName = profile.main.fallback ? "Karma Profil" : profile.main.name;
+
+  let size = 64;
+  c.font = `700 ${size}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+  while (c.measureText(displayName).width > PW - 160 && size > 40) {
+    size -= 2;
+    c.font = `700 ${size}px 'Arial Narrow', Impact, 'Franklin Gothic Medium', sans-serif`;
+  }
+
+  const yMain = top + 50;
+  c.lineWidth = 8;
+  c.lineJoin = "round";
+  c.strokeStyle = INK;
+  c.fillStyle = css(rgb);
+  c.strokeText(displayName, PW / 2, yMain);
+  c.fillText(displayName, PW / 2, yMain);
+
+  let y = yMain + 30;
+
+  if (profile.secondary) {
+    c.font = "500 22px 'Arial Narrow', Impact, sans-serif";
+    c.fillStyle = "#666";
+    c.fillText(`Ek eğilim: ${profile.secondary.name}`, PW / 2, y);
+    y += 40; // 26'dan 40'a çıkarıldı, çiplerle arasına boşluk kondu
+  }
+
+  if (profile.modalities.length) {
+    const chipH = drawProfileChips(c, profile.modalities, y, rgb);
+    y += chipH + 16; // 10'dan 16'ya çıkarıldı, çiplerle açıklama arasına boşluk kondu
+  } else {
+    y += 12; // 8'den 12'ye çıkarıldı
+  }
+
+  const summary = buildSummary(profile);
+  c.font = "400 21px 'Arial Narrow', Impact, sans-serif";
+  c.fillStyle = "#555";
+  const lines = wrapText(c, summary, PW - 200);
+
+  const lineH = 25;
+  const descender = 5;
+  const barTop = top + 286;
+
+  const switchLabelOffset = (profile.ds.label === "switch") ? 30 : 0;
+  const maxBaseline = barTop - descender - switchLabelOffset;
+
+  const summaryStartY = Math.max(y, top + 140);
+
+  let maxSummaryLines = 0;
+  if (summaryStartY <= maxBaseline) {
+    maxSummaryLines = Math.min(3,
+      Math.floor((maxBaseline - summaryStartY) / lineH) + 1);
+  }
+
+  let sy = summaryStartY;
+  for (const line of lines.slice(0, maxSummaryLines)) {
+    c.fillText(line, PW / 2, sy);
+    sy += lineH;
+  }
+
+  drawDSBar(c, profile.ds, barTop);
+  c.restore();
+}
+
 function drawCell(c, cell, cx, top, rgb) {
   c.save();
   c.translate(cx - 48, top);
@@ -1245,13 +1833,24 @@ function drawPageContent(c, page, pageIndex, pageCount) {
 
   drawHeader(c, pageIndex, pageCount);
 
-  let y = POSTER_TOP;
+  const profile = allAnswered() ? computeProfile(state) : null;
+  if (pageIndex === 0) drawProfileBlock(c, profile);
+
+  let y = contentTopForPage(pageIndex);
   for (const row of page.rows) {
     row.cells.forEach((cell, col) => {
       const cx = PW / 2 + (col - (COLS - 1) / 2) * COL_W;
       drawCell(c, cell, cx, y, rgb);
     });
     y += row.height;
+  }
+
+  if (pageIndex === pageCount - 1) {
+    c.textAlign = "center";
+    c.textBaseline = "alphabetic";
+    c.fillStyle = "#888";
+    c.font = "500 18px 'Arial Narrow', Impact, sans-serif";
+    c.fillText(DISCLAIMER_TEXT, PW / 2, H - 32);
   }
 
   if (pageCount > 1) {
@@ -1488,6 +2087,23 @@ function updateValidationStatus() {
   }
 }
 
+function updateProfileLine() {
+  const el = $("profileLine");
+  if (!el) return;
+  if (!allAnswered()) {
+    el.hidden = true;
+    el.textContent = "";
+    return;
+  }
+  const profile = computeProfile(state);
+  let text = `Arketip: ${profile.main.fallback ? "Karma Profil" : profile.main.name}`;
+  if (profile.modalities.length) {
+    text += ` · Alt odak: ${profile.modalities.map(m => m.name).join(", ")}`;
+  }
+  el.textContent = text;
+  el.hidden = false;
+}
+
 function drawPreview() {
   const layout = buildLayout();
   const canvas = $("poster");
@@ -1509,7 +2125,6 @@ function drawPreview() {
   }
 }
 
-/* ===== ？ glifinin görsel merkezini ölçüp kutuya hizala ===== */
 let _qGlyphOffsetCache = null;
 
 function measureQGlyphOffset() {
@@ -1627,12 +2242,12 @@ function render() {
   const n = state.answers.filter(a => a !== null).length;
   $("progress").textContent = `${n} / ${CATEGORIES.length} yanıtlandı`;
 
+  updateProfileLine();
   drawPreview();
   updateValidationStatus();
   requestAnimationFrame(alignQGlyphs);
 }
 
-/* ===== Kaydetme / dışa aktarma ===== */
 function fileBase() {
   const slug = state.name.trim().toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
@@ -1673,7 +2288,6 @@ function thumbCanvas(cv, maxW) {
   return t;
 }
 
-/* ---- Bağımlılıksız çok sayfalı PDF oluşturucu ---- */
 function buildPDF(pages) {
   const enc = new TextEncoder();
   const parts = [];
@@ -1945,7 +2559,7 @@ if (document.fonts && document.fonts.ready) {
 }
 </script>
 
-  <!-- Cloudflare Web Analytics -->
+<!-- Cloudflare Web Analytics -->
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8fe400d3c16c4c8e951ce7dfe00929d6"}'></script>
 <!-- End Cloudflare Web Analytics -->
 
