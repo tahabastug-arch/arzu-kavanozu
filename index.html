@@ -25,17 +25,11 @@
 
   .header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px 20px;flex-wrap:wrap}
   .social{display:flex;gap:10px;flex-wrap:wrap}
-  .social a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:2px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;min-height:44px;line-height:1;transition:background .15s,border-color .15s,transform .08s;white-space:nowrap}
-  .social a:hover{background:var(--bg);border-color:var(--ink)}
+  .social a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);text-decoration:none;transition:background .15s,border-color .15s,transform .08s}
+  .social a:hover{background:var(--bg);border-color:var(--ink);transform:scale(1.05)}
   .social a:active{transform:scale(.97)}
   .social a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
   .social a svg{width:20px;height:20px;flex-shrink:0;display:block}
-  @media(max-width:600px){
-    .header-top{flex-direction:column;align-items:stretch}
-    .social{justify-content:flex-start}
-    .social a{padding:10px 12px;font-size:14px}
-    .social a svg{width:18px;height:18px}
-  }
 
   .layout{display:grid;gap:24px}
   @media(min-width:960px){.layout{grid-template-columns:minmax(0,1fr) 430px}.side{position:sticky;top:20px;align-self:start}}
@@ -136,27 +130,24 @@
   <header>
     <div class="header-top">
       <h1><span>Arzu Kavanozu</span></h1>
-<nav class="social" aria-label="Sosyal medya bağlantıları">
-        <a href="https://tahabastug-arch.github.io/kozmik-bahce/" target="_blank" rel="noopener noreferrer" aria-label="Kozmik Bahçe (yeni sekmede açılır)">
+      <nav class="social" aria-label="Sosyal medya bağlantıları">
+        <a href="https://tahabastug-arch.github.io/kozmik-bahce/" target="_blank" rel="noopener noreferrer" aria-label="Kozmik Bahçe" title="Kozmik Bahçe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <circle cx="12" cy="12" r="5"/>
             <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-22 12 12)"/>
           </svg>
-          <span>Kozmik Bahçe</span>
         </a>
-        <a href="https://www.instagram.com/_tahabastug/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilim (yeni sekmede açılır)">
+        <a href="https://www.instagram.com/_tahabastug/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" ry="5.5"/>
             <circle cx="12" cy="12" r="4.4"/>
             <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/>
           </svg>
-          <span>Instagram</span>
         </a>
-        <a href="https://x.com/TahaBastug35_5" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) profilim (yeni sekmede açılır)">
+        <a href="https://x.com/TahaBastug35_5" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" title="X (Twitter)">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
           </svg>
-          <span>X</span>
         </a>
       </nav>
     </div>
@@ -1649,7 +1640,7 @@ function drawProfileChips(c, mods, y, rgb) {
       c.fillText(it.text, x + it.w / 2, cy + h / 2 + 1);
       x += it.w + gap;
     }
-    cy += h + 10; // Aralık normale döndürüldü
+    cy += h + 10;
   }
 
   return Math.max(0, cy - y - (lines.length ? 10 : 0));
@@ -1763,14 +1754,14 @@ function drawProfileBlock(c, profile) {
     c.font = "500 22px 'Arial Narrow', Impact, sans-serif";
     c.fillStyle = "#666";
     c.fillText(`Ek eğilim: ${profile.secondary.name}`, PW / 2, y);
-    y += 40; // 26'dan 40'a çıkarıldı, çiplerle arasına boşluk kondu
+    y += 40;
   }
 
   if (profile.modalities.length) {
     const chipH = drawProfileChips(c, profile.modalities, y, rgb);
-    y += chipH + 16; // 10'dan 16'ya çıkarıldı, çiplerle açıklama arasına boşluk kondu
+    y += chipH + 16;
   } else {
-    y += 12; // 8'den 12'ye çıkarıldı
+    y += 12;
   }
 
   const summary = buildSummary(profile);
@@ -2373,7 +2364,15 @@ function showSingleModal(url) {
   img.src = url;
   img.alt = "Doldurulmuş kavanozların";
 
-  body.append(p, img);
+  const crossPromo = document.createElement("div");
+  crossPromo.style.cssText = "margin-top:16px;padding-top:14px;border-top:2px dashed var(--line);text-align:center";
+  crossPromo.innerHTML = `
+    <a href="https://tahabastug-arch.github.io/kozmik-bahce/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--ink);background:var(--bg);border:2px solid var(--ink);padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 3px 0 var(--ink)">
+      🌌 Kozmik Bahçe ile İlişki Evrenini Keşfet →
+    </a>
+  `;
+
+  body.append(p, img, crossPromo);
   $("modal").hidden = false;
   $("closeModal").focus();
 }
