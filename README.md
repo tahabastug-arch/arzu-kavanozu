@@ -2,7 +2,8 @@
 
 **Arzu Kavanozu** is a browser-based application that lets you explore personal preferences across different categories, customize your responses with colors, and export your results as images.
 
-**Live Demo:** [Open Arzu Kavanozu](https://tahabastug-arch.github.io/arzu-kavanozu/)
+🔗 **Live Demo:** [Open Arzu Kavanozu](https://tahabastug-arch.github.io/arzu-kavanozu/)  
+🌌 **Sister Project:** [Explore Kozmik Bahçe](https://tahabastug-arch.github.io/kozmik-bahce/)
 
 ## Features
 
@@ -42,6 +43,7 @@ This statement does not cover hosting provider access logs or external applicati
 
 - Instagram: [@_tahabastug](https://www.instagram.com/_tahabastug/)
 - X: [@TahaBastug35_5](https://x.com/TahaBastug35_5)
+- Other Project: [Kozmik Bahçe](https://tahabastug-arch.github.io/kozmik-bahce/)
 
 ## Source Project and Attribution
 
@@ -55,7 +57,8 @@ Please review the original repository for its license and terms of use.
 
 **Arzu Kavanozu**, kişisel tercihlerini farklı kategorilerde değerlendirmeni, yanıtlarını renklerle kişiselleştirmeni ve sonuçlarını görsel olarak dışa aktarmanı sağlayan tarayıcı tabanlı bir uygulamadır.
 
-**Canlı Demo:** [Arzu Kavanozu'nu kullan](https://tahabastug-arch.github.io/arzu-kavanozu/)
+🔗 **Canlı Demo:** [Arzu Kavanozu'nu kullan](https://tahabastug-arch.github.io/arzu-kavanozu/)  
+🌌 **Kardeş Proje / Keşfet:** [Kozmik Bahçe'yi İncele](https://tahabastug-arch.github.io/kozmik-bahce/)
 
 ## Özellikler
 
@@ -95,6 +98,7 @@ Bu açıklama, barındırma sağlayıcısının erişim kayıtlarını veya payl
 
 - Instagram: [@_tahabastug](https://www.instagram.com/_tahabastug/)
 - X: [@TahaBastug35_5](https://x.com/TahaBastug35_5)
+- Diğer Projem: [Kozmik Bahçe](https://tahabastug-arch.github.io/kozmik-bahce/)
 
 ## Kaynak Proje ve Atıf
 
