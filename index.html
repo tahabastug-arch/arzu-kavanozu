@@ -136,7 +136,14 @@
   <header>
     <div class="header-top">
       <h1><span>Arzu Kavanozu</span></h1>
-      <nav class="social" aria-label="Sosyal medya bağlantıları">
+<nav class="social" aria-label="Sosyal medya bağlantıları">
+        <a href="https://tahabastug-arch.github.io/kozmik-bahce/" target="_blank" rel="noopener noreferrer" aria-label="Kozmik Bahçe (yeni sekmede açılır)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="5"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-22 12 12)"/>
+          </svg>
+          <span>Kozmik Bahçe</span>
+        </a>
         <a href="https://www.instagram.com/_tahabastug/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profilim (yeni sekmede açılır)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" ry="5.5"/>
@@ -1515,13 +1522,8 @@ function buildLayout() {
   }
   total += FINAL_BOTTOM_PAD;
 
-  let tier = 1;
-  if (total > SINGLE_MAX_H) tier = 3;
-  else if (total > COMPACT_MAX_H) tier = 2;
-
-  const pages = tier === 3
-    ? paginate(rows)
-    : [{ rows, height: total }];
+  const tier = 1;
+  const pages = [{ rows, height: total }];
 
   return { rows, total, tier, pages };
 }
@@ -1588,7 +1590,7 @@ function drawHeader(c, pageIndex, pageCount) {
   c.textAlign = "center";
   c.font = "500 27px 'Arial Narrow', Impact, sans-serif";
   c.fillStyle = "#555";
-  c.fillText("😶 0   🙂 1   😊 2   😏 3   😍 4   🔥 5", PW / 2, 198);
+  c.fillText("😶 0\u00a0 \u00a0🙂 1\u00a0 \u00a0😊 2\u00a0 \u00a0😏 3\u00a0 \u00a0😍 4\u00a0 \u00a0🔥 5", PW / 2, 198);
 
   c.font = "600 25px 'Arial Narrow', Impact, sans-serif";
   c.fillText("🚫 = kesin sınır · ？ = merak ediyorum", PW / 2, 232);
