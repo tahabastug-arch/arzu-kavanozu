@@ -1977,6 +1977,15 @@ CATEGORIES.forEach((cat, i) => {
       if (!VISIBLE_ANSWERS.has(newAns)) state.subs[i] = [];
       persist();
       update();
+
+      if (newAns !== null && i < qEls.length - 1) {
+        const nextQ = qEls[i + 1];
+        if (nextQ) {
+          setTimeout(() => {
+            nextQ.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 120);
+        }
+      }
     };
     scale.append(b);
     buttons.push(b);
@@ -2353,7 +2362,7 @@ function buildPDF(pages) {
   return out;
 }
 
-function showSingleModal(url) {
+function showSingleModal(url, shareFile) {
   const body = $("modalBody");
   body.innerHTML = "";
 
@@ -2364,6 +2373,20 @@ function showSingleModal(url) {
   img.src = url;
   img.alt = "Doldurulmuş kavanozların";
 
+  body.append(p, img);
+
+  if (shareFile) {
+    const shareBtn = document.createElement("button");
+    shareBtn.type = "button";
+    shareBtn.className = "ghost";
+    shareBtn.style.cssText = "width:100%;margin-top:12px;padding:12px 16px";
+    shareBtn.textContent = "📤 Paylaş / Fotoğraflara Kaydet";
+    shareBtn.onclick = () => {
+      navigator.share({ files: [shareFile] }).catch(() => {});
+    };
+    body.appendChild(shareBtn);
+  }
+
   const crossPromo = document.createElement("div");
   crossPromo.style.cssText = "margin-top:16px;padding-top:14px;border-top:2px dashed var(--line);text-align:center";
   crossPromo.innerHTML = `
@@ -2372,7 +2395,7 @@ function showSingleModal(url) {
     </a>
   `;
 
-  body.append(p, img, crossPromo);
+  body.appendChild(crossPromo);
   $("modal").hidden = false;
   $("closeModal").focus();
 }
@@ -2498,24 +2521,23 @@ async function save() {
       return;
     }
 
-    const canvas = renderPage(layout.pages[0], 0, 1, 2);
+    const maxScale = Math.min(2, Math.sqrt(15000000 / (PW * layout.pages[0].height)));
+    const canvas = renderPage(layout.pages[0], 0, 1, maxScale);
     const blob = await canvasToBlob(canvas);
     const fname = fileBase() + ".png";
     const file = new File([blob], fname, { type: "image/png" });
+    const url = URL.createObjectURL(blob);
     const touch = matchMedia("(pointer: coarse)").matches;
+    const canShareFile = touch && navigator.canShare && navigator.canShare({ files: [file] });
 
-    if (touch && navigator.canShare && navigator.canShare({ files: [file] })) {
+    triggerDownload(url, fname);
+    showSingleModal(url, canShareFile ? file : null);
+
+    if (canShareFile) {
       try {
         await navigator.share({ files: [file] });
-        return;
-      } catch (e) {
-        if (e.name === "AbortError") return;
-      }
+      } catch (e) {}
     }
-
-    const url = URL.createObjectURL(blob);
-    triggerDownload(url, fname);
-    showSingleModal(url);
   } catch (e) {
     console.error(e);
     toast("Görsel oluşturulamadı. Lütfen tekrar deneyin.");
