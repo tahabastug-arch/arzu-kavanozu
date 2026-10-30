@@ -108,7 +108,7 @@ Bu açıklama, barındırma sağlayıcısının erişim kayıtlarını veya payl
 
 **Taha BAŞTUĞ**
 
-- 📸 Instagram: [@_tahabastug](https://www.instagram.com/_tahastug/)
+- 📸 Instagram: [@_tahabastug](https://www.instagram.com/_tahabastug/)
 - 🐦 X: [@TahaBastug35_5](https://x.com/TahaBastug35_5)
 - 🌌 Diğer Projem: [Kozmik Bahçe](https://tahabastug-arch.github.io/kozmik-bahce/)
 
